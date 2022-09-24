@@ -13,8 +13,7 @@ app.use(morgan('dev'));
 app.get('/', (_, res) => res.send('running'));
 app.use('/api/auth', authRoutes);
 
-let port = 4000;
-
+const port = 4000;
 app.listen(port, async () => {
   console.log(`Server running at http://localhost:${port}`);
 

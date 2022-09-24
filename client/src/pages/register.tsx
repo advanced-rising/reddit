@@ -31,7 +31,7 @@ const Register = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      const result = await axios.post('/api/auth/register', sign);
+      const result = await axios.post('/auth/register', sign);
       console.log('result', result);
       router.push('/login');
     } catch (error: any) {
