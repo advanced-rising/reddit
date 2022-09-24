@@ -23,6 +23,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
   return (
     <div className={className}>
       <input
+        autoComplete='off'
         type={type}
         style={{ minWidth: 300 }}
         className={cls(
