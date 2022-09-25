@@ -68,6 +68,7 @@ const Login = () => {
               type='password'
             />
             <button
+              disabled={sign.username.length === 0 || sign.password.length === 0}
               className='w-full py-4 mb-1 text-xs font-bold text-white 
             uppercase bg-red-400 border border-red-400 rounded
             disabled:bg-gray-400 disabled:border-gray-400

@@ -55,10 +55,6 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-const me = async (_: Request, res: Response) => {
-  return res.json(res.locals.user);
-};
-
 const register = async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
   try {
