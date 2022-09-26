@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import InputGroup from 'src/components/InputGroup';
+import { useAuthDispatch, useAuthState } from 'src/context/auth';
 
 interface RegisterTypes {
   email: string;
@@ -11,6 +12,8 @@ interface RegisterTypes {
 }
 const Register = () => {
   const router = useRouter();
+  const { authenticated } = useAuthState();
+  if (authenticated) router.push('/');
 
   const [sign, setSign] = useState<RegisterTypes>({
     email: '',

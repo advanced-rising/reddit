@@ -56,6 +56,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     defaultDispatch({ type, payload });
   };
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get('/auth/me');
+        dispatch('LOGIN', res.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        dispatch('STOP_LOADING');
+      }
+    })();
+  }, []);
+
   return (
     <DispatchContext.Provider value={dispatch}>
       <StateContext.Provider value={state}>{children}</StateContext.Provider>

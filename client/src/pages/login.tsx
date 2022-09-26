@@ -12,6 +12,9 @@ interface LoginTypes {
 
 const Login = () => {
   const router = useRouter();
+  const { authenticated } = useAuthState();
+  const dispatch = useAuthDispatch();
+  if (authenticated) router.push('/');
 
   const [sign, setSign] = useState<LoginTypes>({
     username: '',
@@ -22,10 +25,6 @@ const Login = () => {
     username: '',
     password: '',
   });
-  const { authenticated } = useAuthState();
-  const dispatch = useAuthDispatch();
-
-  if (authenticated) router.push('/');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
