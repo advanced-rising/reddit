@@ -1,18 +1,16 @@
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
-import { useAuthDispatch, useAuthState } from '../context/auth';
+import useAccount from '../hooks/useAccount';
+import axios from '../utils/axios';
 
 const NavBar: React.FC = () => {
-  const { loading, authenticated } = useAuthState();
-  const dispatch = useAuthDispatch();
+  const { account } = useAccount();
 
   const handleLogout = () => {
     axios
       .post('/auth/logout')
       .then(() => {
-        dispatch('LOGOUT');
         window.location.reload();
       })
       .catch((error) => {
@@ -39,29 +37,30 @@ const NavBar: React.FC = () => {
           />
         </div>
       </div>
-
-      <div className='flex'>
-        {authenticated ? (
+      {account && (
+        <div className='flex'>
           <button
             className='w-20 px-2 mr-2 text-sm text-center text-white bg-red-400 rounded h-7'
             onClick={handleLogout}>
             로그아웃
           </button>
-        ) : (
-          <>
-            <Link href='/login' passHref>
-              <a className='w-20 px-2 pt-1 mr-2 text-sm text-center text-red-500 border border-red-500 rounded h-7'>
-                로그인
-              </a>
-            </Link>
-            <Link href='/register' passHref>
-              <a className='w-20 px-2 pt-1 text-sm text-center text-white bg-red-400 rounded h-7'>
-                회원가입
-              </a>
-            </Link>
-          </>
-        )}
-      </div>
+        </div>
+      )}
+
+      {!account && (
+        <div className='flex'>
+          <Link href='/login' passHref>
+            <a className='w-20 px-2 pt-1 mr-2 text-sm text-center text-red-500 border border-red-500 rounded h-7'>
+              로그인
+            </a>
+          </Link>
+          <Link href='/register' passHref>
+            <a className='w-20 px-2 pt-1 text-sm text-center text-white bg-red-400 rounded h-7'>
+              회원가입
+            </a>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

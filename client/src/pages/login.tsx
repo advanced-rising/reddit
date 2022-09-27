@@ -1,10 +1,11 @@
-import axios from 'axios';
+import { QueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import InputGroup from '../components/InputGroup';
+import useAccount from '../hooks/useAccount';
 
-import { useAuthDispatch, useAuthState } from '../context/auth';
+import axios from '../utils/axios';
 
 interface LoginTypes {
   username: string;
@@ -12,10 +13,10 @@ interface LoginTypes {
 }
 
 const Login = () => {
+  const qc = new QueryClient();
   const router = useRouter();
-  const { authenticated } = useAuthState();
-  const dispatch = useAuthDispatch();
-  if (authenticated) router.push('/');
+  const { account } = useAccount();
+  if (account) router.push('/');
 
   const [sign, setSign] = useState<LoginTypes>({
     username: '',
@@ -41,7 +42,8 @@ const Login = () => {
         { withCredentials: true },
       );
 
-      dispatch('LOGIN', res.data?.user);
+      console.log(res);
+      qc.invalidateQueries(['user']);
 
       router.push('/');
     } catch (error: any) {

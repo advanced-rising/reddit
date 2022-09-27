@@ -1,27 +1,43 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 
-import axios from 'axios';
 import { useRouter } from 'next/router';
-import { AuthProvider } from '../context/auth';
 import NavBar from '../components/NavBar';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  // axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + '/api';
-  axios.defaults.baseURL = 'http://localhost:4000/api';
-  axios.defaults.withCredentials = true;
+import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Provider } from 'react-redux';
+import { store } from '../redux/store';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 20,
+    },
+  },
+});
+
+function MyApp(props: AppProps<{ dehydratedState: unknown }>) {
+  const { Component, pageProps } = props;
   const { pathname } = useRouter();
   const authRoutes = ['/register', '/login'];
   const authRoute = authRoutes.includes(pathname);
 
   return (
-    <AuthProvider>
-      {!authRoute && <NavBar />}
-      <div className={authRoute ? '' : 'pt-12 bg-gray-200 min-h-screen'}>
-        <Component {...pageProps} />
-      </div>
-    </AuthProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps?.dehydratedState}>
+          <Provider store={store}>
+            {!authRoute && <NavBar />}
+            <div className={authRoute ? '' : 'pt-12 bg-gray-200 min-h-screen'}>
+              <Component {...pageProps} />
+            </div>
+          </Provider>
+          <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+        </Hydrate>
+      </QueryClientProvider>
+    </>
   );
 }
 

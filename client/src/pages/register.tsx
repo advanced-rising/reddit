@@ -1,9 +1,9 @@
-import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import InputGroup from '../components/InputGroup';
-import { useAuthState } from '../context/auth';
+import useAccount from '../hooks/useAccount';
+import axios from '../utils/axios';
 
 interface RegisterTypes {
   email: string;
@@ -12,8 +12,8 @@ interface RegisterTypes {
 }
 const Register = () => {
   const router = useRouter();
-  const { authenticated } = useAuthState();
-  if (authenticated) router.push('/');
+  const { account } = useAccount();
+  if (account) router.push('/');
 
   const [sign, setSign] = useState<RegisterTypes>({
     email: '',
