@@ -22,6 +22,7 @@ interface Action {
 }
 
 const reducer = (state: State, { type, payload }: Action) => {
+  console.log('state :', state, 'payload : ', payload);
   switch (type) {
     case 'LOGIN':
       return {
@@ -52,22 +53,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     loading: true,
   });
 
+  console.log('state >>> ', state);
+
   const dispatch = (type: string, payload?: any) => {
     defaultDispatch({ type, payload });
   };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios.get('/auth/me');
-        dispatch('LOGIN', res.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        dispatch('STOP_LOADING');
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const res = await axios.get('/auth/me');
+  //       dispatch('LOGIN', res.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // });
 
   return (
     <DispatchContext.Provider value={dispatch}>

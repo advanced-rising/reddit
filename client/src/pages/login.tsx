@@ -2,7 +2,8 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import InputGroup from 'src/components/InputGroup';
+import InputGroup from '../components/InputGroup';
+
 import { useAuthDispatch, useAuthState } from '../context/auth';
 
 interface LoginTypes {
@@ -34,12 +35,17 @@ const Login = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      const result = await axios.post('/auth/login', sign, { withCredentials: true });
-      dispatch('LOGIN', result.data?.user);
+      const res = await axios.post(
+        '/auth/login',
+        { password: sign.password, username: sign.username },
+        { withCredentials: true },
+      );
+
+      dispatch('LOGIN', res.data?.user);
 
       router.push('/');
     } catch (error: any) {
-      console.log('error', error);
+      console.log(error);
       setErrors(error?.response.data || {});
     }
   };

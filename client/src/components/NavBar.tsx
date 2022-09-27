@@ -35,33 +35,32 @@ const NavBar: React.FC = () => {
           <input
             type='text'
             placeholder='Search Reddit'
-            className='px-3 py-1 bg-transparent rounded h-7 focus:outline-none text-xs'
+            className='px-3 py-1 bg-transparent rounded h-7 focus:outline-none'
           />
         </div>
       </div>
 
       <div className='flex'>
-        {!loading &&
-          (authenticated ? (
-            <button
-              className='w-20 px-2 mr-2 text-sm text-center text-white bg-gray-400 rounded h-7'
-              onClick={handleLogout}>
-              로그아웃
-            </button>
-          ) : (
-            <>
-              <Link href='/login'>
-                <a className='w-20 px-2 pt-1 mr-2 text-sm text-center text-red-400 border border-red-400 rounded h-7'>
-                  로그인
-                </a>
-              </Link>
-              <Link href='/register'>
-                <a className='w-20 px-2 pt-1 text-sm text-center text-white bg-red-400 rounded h-7'>
-                  회원가입
-                </a>
-              </Link>
-            </>
-          ))}
+        {authenticated ? (
+          <button
+            className='w-20 px-2 mr-2 text-sm text-center text-white bg-red-400 rounded h-7'
+            onClick={handleLogout}>
+            로그아웃
+          </button>
+        ) : (
+          <>
+            <Link href='/login' passHref>
+              <a className='w-20 px-2 pt-1 mr-2 text-sm text-center text-red-500 border border-red-500 rounded h-7'>
+                로그인
+              </a>
+            </Link>
+            <Link href='/register' passHref>
+              <a className='w-20 px-2 pt-1 text-sm text-center text-white bg-red-400 rounded h-7'>
+                회원가입
+              </a>
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

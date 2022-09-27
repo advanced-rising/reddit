@@ -2,8 +2,8 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import InputGroup from 'src/components/InputGroup';
-import { useAuthDispatch, useAuthState } from 'src/context/auth';
+import InputGroup from '../components/InputGroup';
+import { useAuthState } from '../context/auth';
 
 interface RegisterTypes {
   email: string;
@@ -35,7 +35,7 @@ const Register = () => {
     event.preventDefault();
     try {
       const result = await axios.post('/auth/register', sign);
-      console.log('result', result);
+
       router.push('/login');
     } catch (error: any) {
       console.log('error', error);
