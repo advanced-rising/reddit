@@ -15,5 +15,6 @@ export default function useAccount() {
       router.push(`/login`);
     },
   });
+
   return { account };
 }

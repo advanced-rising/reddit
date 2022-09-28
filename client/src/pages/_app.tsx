@@ -8,6 +8,8 @@ import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { GetServerSideProps } from 'next';
+import axios from '../utils/axios';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,3 +44,16 @@ function MyApp(props: AppProps<{ dehydratedState: unknown }>) {
 }
 
 export default MyApp;
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  try {
+    const cookie = req.headers.cookie;
+    // 쿠키 없다면 에러 보내기
+    if (!cookie) throw new Error('Missing auth token cookie');
+    // 쿠키 있다면 쿠키를 이용해서 벡엔드 인증처리하기
+    await axios.get('/auth/me', { headers: { cookie } });
+    return { props: {} };
+  } catch (error) {
+    return { props: {} };
+  }
+};

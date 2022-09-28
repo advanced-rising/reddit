@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import InputGroup from '../components/InputGroup';
 import useAccount from '../hooks/useAccount';
+import { login } from '../redux/slices/user';
+import { useAppDispatch } from '../redux/storeHooks';
 
 import axios from '../utils/axios';
 
@@ -17,6 +19,8 @@ const Login = () => {
   const router = useRouter();
   const { account } = useAccount();
   if (account) router.push('/');
+
+  const dispatch = useAppDispatch();
 
   const [sign, setSign] = useState<LoginTypes>({
     username: '',
@@ -41,6 +45,7 @@ const Login = () => {
         { password: sign.password, username: sign.username },
         { withCredentials: true },
       );
+      dispatch(login());
 
       console.log(res);
       qc.invalidateQueries(['user']);

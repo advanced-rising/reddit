@@ -2,15 +2,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
 import useAccount from '../hooks/useAccount';
+import { logout } from '../redux/slices/user';
+import { useAppDispatch, useAppSelector } from '../redux/storeHooks';
 import axios from '../utils/axios';
 
 const NavBar: React.FC = () => {
   const { account } = useAccount();
-
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const handleLogout = () => {
     axios
       .post('/auth/logout')
       .then(() => {
+        dispatch(logout());
         window.location.reload();
       })
       .catch((error) => {
@@ -19,11 +23,11 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <div className='fixed inset-x-0 top-0 z-10 flex items-center justify-between px-5 bg-white h-13'>
+    <div className='fixed inset-x-0 top-0 z-10 flex items-center justify-between px-5 bg-white h-13 py-2'>
       <span className='text-2xl font-semibold text-gray-400'>
         <Link href='/'>
-          <a>
-            <Image src='/reddit-name-logo.png' alt='logo' width={80} height={45}></Image>
+          <a className='relative w-20 h-12 flex'>
+            <Image src='/reddit-name-logo.png' alt='logo' layout='fill' objectFit='contain' />
           </a>
         </Link>
       </span>
@@ -37,7 +41,7 @@ const NavBar: React.FC = () => {
           />
         </div>
       </div>
-      {account && (
+      {user && (
         <div className='flex'>
           <button
             className='w-20 px-2 mr-2 text-sm text-center text-white bg-red-400 rounded h-7'
@@ -47,7 +51,7 @@ const NavBar: React.FC = () => {
         </div>
       )}
 
-      {!account && (
+      {!user && (
         <div className='flex'>
           <Link href='/login' passHref>
             <a className='w-20 px-2 pt-1 mr-2 text-sm text-center text-red-500 border border-red-500 rounded h-7'>
