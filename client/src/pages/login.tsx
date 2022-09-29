@@ -40,14 +40,17 @@ const Login = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      const res = await axios.post(
+      const {
+        data: { token },
+      } = await axios.post(
         '/auth/login',
         { password: sign.password, username: sign.username },
         { withCredentials: true },
       );
+
+      localStorage.setItem('superSecret', token);
       dispatch(login());
 
-      console.log(res);
       qc.invalidateQueries(['user']);
 
       router.push('/');

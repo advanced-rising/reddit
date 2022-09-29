@@ -14,6 +14,7 @@ const NavBar: React.FC = () => {
     axios
       .post('/auth/logout')
       .then(() => {
+        localStorage.removeItem('superSecret');
         dispatch(logout());
         window.location.reload();
       })
