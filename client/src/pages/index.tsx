@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useAccount from '../hooks/useAccount';
 import { useAppSelector } from '../redux/storeHooks';
-import { Post, User } from '../types/dto';
+import { Post, Sub, User } from '../types/dto';
 import axios from '../utils/axios';
 
 export const getServerSideProps = async ({ req, res }: GetServerSidePropsContext) => {
@@ -37,14 +37,14 @@ const Home: NextPage<HomeProps> = ({ data }) => {
     return `/posts?page=${pageIndex}`;
   };
 
-  const { data: subs } = useQuery(
-    ['subs'],
-    () => {
-      axios.get(`/subs/sub/topSubs`);
+  const { data: topSubs } = useQuery(
+    ['topSubs'],
+    async (): Promise<Sub[]> => {
+      const { data } = await axios.get(`/subs/sub/topSubs`);
+      return data;
     },
     {},
   );
-  console.log('subs', subs);
 
   // const {
   //   status,
@@ -88,7 +88,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
 
           {/* 커뮤니티 리스트 */}
           <div>
-            {/* {topSubs?.map((sub) => (
+            {topSubs?.map((sub) => (
               <div key={sub.name} className='flex items-center px-4 py-2 text-xs border-b'>
                 <Link href={`/r/${sub.name}`}>
                   <a>
@@ -106,7 +106,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
                 </Link>
                 <p className='ml-auto font-md'>{sub.postCount}</p>
               </div>
-            ))} */}
+            ))}
           </div>
           {user && (
             <div className='w-full py-6 text-center'>

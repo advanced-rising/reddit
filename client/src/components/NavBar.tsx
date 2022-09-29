@@ -16,7 +16,6 @@ const NavBar: React.FC = () => {
       .then(() => {
         localStorage.removeItem('superSecret');
         dispatch(logout());
-        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
