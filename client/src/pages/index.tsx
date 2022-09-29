@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import PostCard from '../components/PostCard';
 import useAccount from '../hooks/useAccount';
 import { useAppSelector } from '../redux/storeHooks';
 import { Post, Sub, User } from '../types/dto';
@@ -46,38 +47,37 @@ const Home: NextPage<HomeProps> = ({ data }) => {
     {},
   );
 
-  // const {
-  //   status,
-  //   data: post,
-  //   error,
-  //   isFetching,
-  //   isFetchingNextPage,
-  //   isFetchingPreviousPage,
-  //   fetchNextPage,
-  //   fetchPreviousPage,
-  //   hasNextPage,
-  //   hasPreviousPage,
-  // } = useInfiniteQuery(
-  //   ['post'],
-  //   async ({ pageParam = 0 }) => {
-  //     const res = await axios.get(`/posts?page=` + pageParam);
-  //     return res.data;
-  //   },
-  //   {
-  //     getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
-  //     getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
-  //   },
-  // );
+  const {
+    status,
+    data: posts,
+    error,
+    isFetching,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    fetchNextPage,
+    fetchPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+  } = useInfiniteQuery(
+    ['post'],
+    async ({ pageParam = 0 }) => {
+      const res = await axios.get(`/posts?page=` + pageParam);
+      return res.data;
+    },
+    {
+      getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
+      getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
+    },
+  );
 
   return (
     <div className='flex max-w-5xl px-4 pt-5 mx-auto'>
       {/* 포스트 리스트 */}
-      {/* <div className='w-full md:mr-3 md:w-8/12'>
-        {isInitialLoading && <p className='text-lg text-center'>로딩중입니다...</p>}
-        {posts?.map((post) => (
-          <PostCard key={post.identifier} post={post} mutate={mutate} />
+      <div className='w-full md:mr-3 md:w-8/12'>
+        {posts?.map((post: any) => (
+          <PostCard key={post.identifier} post={post} />
         ))}
-      </div> */}
+      </div>
 
       {/* 사이드바 */}
       <div className='hidden w-4/12 ml-3 md:block'>
