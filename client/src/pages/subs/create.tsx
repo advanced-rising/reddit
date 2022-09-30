@@ -1,3 +1,4 @@
+import { QueryClient, useQueryClient } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { ChangeEvent, FormEvent, useState } from 'react';
@@ -12,6 +13,7 @@ interface CreateTypes {
 
 const SubCreate = () => {
   const router = useRouter();
+  const qc = useQueryClient();
   const [create, setCreate] = useState<CreateTypes>({
     name: '',
     title: '',
@@ -29,6 +31,7 @@ const SubCreate = () => {
 
     try {
       const res = await axios.post('/subs', create);
+      await qc.invalidateQueries(['topSubs']);
       router.push(`/r/${res.data.name}`);
     } catch (error: any) {
       console.log(error);
