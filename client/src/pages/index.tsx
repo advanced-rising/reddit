@@ -4,11 +4,15 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import postApi from '../apis/postApi';
+import subApi from '../apis/subApi';
 import PostCard from '../components/PostCard';
 import useAccount from '../hooks/useAccount';
 import { useAppSelector } from '../redux/storeHooks';
 import { Post, Sub, User } from '../types/dto';
 import axios from '../utils/axios';
+import qs from 'qs';
 
 export const getServerSideProps = async ({ req, res }: GetServerSidePropsContext) => {
   try {
@@ -33,19 +37,18 @@ const Home: NextPage<HomeProps> = ({ data }) => {
   const { account } = useAccount();
   const { user } = useAppSelector((state) => state.user);
 
-  const getKey = (pageIndex: number, previousPageData: Post[]) => {
-    if (previousPageData && !previousPageData.length) return null;
-    return `/posts?page=${pageIndex}`;
-  };
-
   const { data: topSubs } = useQuery(
     ['topSubs'],
-    async (): Promise<Sub[]> => {
-      const { data } = await axios.get(`/subs/sub/topSubs`);
-      return data;
+    async () => {
+      const result = await subApi.findByTop();
+      return result;
     },
     {},
   );
+
+  const [query, setQuery] = useState({
+    page: 1,
+  });
 
   const {
     status,
@@ -61,22 +64,23 @@ const Home: NextPage<HomeProps> = ({ data }) => {
   } = useInfiniteQuery(
     ['post'],
     async ({ pageParam = 0 }) => {
-      const res = await axios.get(`/posts?page=` + pageParam);
-      return res.data;
+      setQuery({ page: pageParam });
+      const result = postApi.findAll(qs.stringify(query));
+      return result;
     },
-    {
-      getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
-      getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
-    },
+    // {
+    //   getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
+    //   getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
+    // },
   );
 
   return (
     <div className='flex max-w-5xl px-4 pt-5 mx-auto'>
       {/* 포스트 리스트 */}
       <div className='w-full md:mr-3 md:w-8/12'>
-        {posts?.map((post: any) => (
+        {/* {posts?.map((post: any) => (
           <PostCard key={post.identifier} post={post} />
-        ))}
+        ))} */}
       </div>
 
       {/* 사이드바 */}

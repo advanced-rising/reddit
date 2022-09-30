@@ -3,8 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
-import useSWR from 'swr';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import subApi from '../../apis/subApi';
 import PostCard from '../../components/PostCard';
 import SideBar from '../../components/SideBar';
@@ -23,7 +22,7 @@ const SubPage = () => {
   const { data: sub } = useQuery(
     ['subs-sub', user],
     async () => {
-      subApi.getSubs(subName);
+      subApi.findByName(subName);
     },
     { enabled: Boolean(subName) },
   );
