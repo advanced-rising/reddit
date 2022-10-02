@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
-
+import cls from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -23,7 +23,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 };
 
 const SubPage = ({ data }: any) => {
-  console.log('data', data);
   const { user } = useAppSelector((state) => state.user);
   const { account } = useAccount();
   const [ownSub, setOwnSub] = useState(false);
@@ -40,7 +39,6 @@ const SubPage = ({ data }: any) => {
 
   useEffect(() => {
     if (router && router.query) {
-      console.log(router.query);
       setSubNameParams(String(router.query.sub));
     }
   }, [router]);
@@ -55,7 +53,6 @@ const SubPage = ({ data }: any) => {
     if (event.target.value.length === 0) return;
 
     const file = event.target.files[0];
-    console.log('file', file);
 
     const formData = new FormData();
     formData.append('file', file);
@@ -85,19 +82,26 @@ const SubPage = ({ data }: any) => {
       {subsName && (
         <>
           <div>
-            <input type='file' hidden={true} ref={fileInputRef} onChange={uploadImage} />
+            <input
+              type='file'
+              hidden={true}
+              ref={fileInputRef}
+              onChange={uploadImage}
+              accept='image/*'
+            />
             {/* 배너 이미지 */}
-            <div className='bg-gray-400'>
+            <div className={cls(ownSub ? 'cursor-pointer' : '', `bg-gray-400 h-56 `)}>
               {subsName.bannerUrl ? (
                 <div
-                  className='h-56'
+                  className={cls(ownSub ? 'cursor-pointer' : '', 'h-56 ')}
                   style={{
                     backgroundImage: `url(${subsName.bannerUrl})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                   }}
-                  onClick={() => openFileInput('banner')}></div>
+                  onClick={() => openFileInput('banner')}
+                />
               ) : (
                 <div className='h-20 bg-gray-400' onClick={() => openFileInput('banner')}></div>
               )}

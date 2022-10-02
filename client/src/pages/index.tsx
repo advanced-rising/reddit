@@ -62,7 +62,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
           {/* 커뮤니티 리스트 */}
           <div>
             {topSubs?.map((sub) => (
-              <div key={sub.name} className='flex items-center px-4 py-2 text-xs border-b'>
+              <div key={sub.name} className='flex items-center px-4 py-2 text-xs border-b w-full'>
                 <Link href={`/r/${sub.name}`}>
                   <a>
                     <Image
@@ -75,9 +75,11 @@ const Home: NextPage<HomeProps> = ({ data }) => {
                   </a>
                 </Link>
                 <Link href={`/r/${sub.name}`}>
-                  <a className='ml-2 font-bold hover:cursor-pointer'>/r/{sub.name}</a>
+                  <a className='ml-2 font-bold hover:cursor-pointer flex flex-row justify-between w-full'>
+                    <p>/r/{sub.name}</p>
+                    <p className='ml-auto font-md'>{sub.postCount}</p>
+                  </a>
                 </Link>
-                <p className='ml-auto font-md'>{sub.postCount}</p>
               </div>
             ))}
           </div>
