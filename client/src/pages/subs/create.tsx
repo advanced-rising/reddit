@@ -2,8 +2,8 @@ import { QueryClient, useQueryClient } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import InputGroup from '../../components/InputGroup';
-import axios from '../../utils/axios';
+import InputGroup from '@components/InputGroup';
+import axios from '@utils/axios';
 
 interface CreateTypes {
   name: string;

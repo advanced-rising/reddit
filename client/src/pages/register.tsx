@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import InputGroup from '../components/InputGroup';
-import useAccount from '../hooks/useAccount';
-import axios from '../utils/axios';
+import InputGroup from '@components/InputGroup';
+import useAccount from '@hooks/useAccount';
+import axios from '@utils/axios';
 
 interface RegisterTypes {
   email: string;

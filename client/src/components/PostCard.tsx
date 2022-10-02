@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
-import { useAppSelector } from '../redux/storeHooks';
+import { useAppSelector } from '@redux/storeHooks';
 
-import { Post } from '../types/dto';
+import { Post } from '@_types/dto';
 
 interface PostCardProps {
   post: Post;

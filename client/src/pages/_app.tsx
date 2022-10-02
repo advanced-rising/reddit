@@ -6,10 +6,8 @@ import NavBar from '../components/NavBar';
 
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
-import { store } from '../redux/store';
+import { store } from '@redux/store';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import axios from '../utils/axios';
 
 const queryClient = new QueryClient({
   defaultOptions: {

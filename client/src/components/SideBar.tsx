@@ -2,8 +2,8 @@ import Link from 'next/link';
 import React from 'react';
 
 import dayjs from 'dayjs';
-import { useAppSelector } from '../redux/storeHooks';
-import { Sub } from '../types/dto';
+import { useAppSelector } from '@redux/storeHooks';
+import { Sub } from '@_types/dto';
 type Props = {
   sub: Sub;
 };

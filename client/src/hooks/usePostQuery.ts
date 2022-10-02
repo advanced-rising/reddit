@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Post } from '../types/dto';
-import axios from '../utils/axios';
+import axios from '@utils/axios';
 
 export const POST_QUERY_KEY = {
   POST: ['post'],

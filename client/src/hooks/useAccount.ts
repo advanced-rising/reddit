@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
-import axios from '../utils/axios';
+import axios from '@utils/axios';
 import { User } from '../types/dto';
 import { useAppDispatch, useAppSelector } from '../redux/storeHooks';
 import { useEffect, useState } from 'react';

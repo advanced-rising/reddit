@@ -1,18 +1,15 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
-import Head from 'next/head';
+import type { GetServerSidePropsContext, NextPage } from 'next';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import PostCard from '../components/PostCard';
-import useAccount from '../hooks/useAccount';
-import { useAppSelector } from '../redux/storeHooks';
-import { Post, Sub, User } from '../types/dto';
-import axios from '../utils/axios';
-import qs from 'qs';
-import useSubQuery from '../hooks/useSubQuery';
+import axios from '@utils/axios';
+import useSubQuery from '@hooks/useSubQuery';
+import { User } from '@_types/dto';
+import useAccount from '@hooks/useAccount';
+import { useAppSelector } from '@redux/storeHooks';
 
 export const getServerSideProps = async ({ req, res }: GetServerSidePropsContext) => {
   try {

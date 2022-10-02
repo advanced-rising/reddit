@@ -2,12 +2,12 @@ import { QueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import InputGroup from '../components/InputGroup';
-import useAccount from '../hooks/useAccount';
-import { login } from '../redux/slices/user';
-import { useAppDispatch } from '../redux/storeHooks';
+import InputGroup from '@components/InputGroup';
+import useAccount from '@hooks/useAccount';
+import { login } from '@redux/slices/user';
+import { useAppDispatch } from '@redux/storeHooks';
 
-import axios from '../utils/axios';
+import axios from '@utils/axios';
 
 interface LoginTypes {
   username: string;

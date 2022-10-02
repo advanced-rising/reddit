@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Sub } from '../types/dto';
-import axios from '../utils/axios';
+import axios from '@utils/axios';
 
 export const SUB_QUERY_KEY = {
   SUB: 'sub',

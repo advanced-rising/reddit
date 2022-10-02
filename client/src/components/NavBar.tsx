@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
-import useAccount from '../hooks/useAccount';
-import { logout } from '../redux/slices/user';
-import { useAppDispatch, useAppSelector } from '../redux/storeHooks';
-import axios from '../utils/axios';
+import useAccount from '@hooks/useAccount';
+import { logout } from '@redux/slices/user';
+import { useAppDispatch, useAppSelector } from '@redux/storeHooks';
+import axios from '@utils/axios';
 
 const NavBar: React.FC = () => {
   const { account } = useAccount();

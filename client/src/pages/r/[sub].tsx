@@ -6,13 +6,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 
-import PostCard from '../../components/PostCard';
-import SideBar from '../../components/SideBar';
-import useAccount from '../../hooks/useAccount';
-import useSubQuery, { SUB_QUERY_KEY } from '../../hooks/useSubQuery';
-import { useAppSelector } from '../../redux/storeHooks';
+import PostCard from '@components/PostCard';
+import SideBar from '@components/SideBar';
+import useAccount from '@hooks/useAccount';
+import useSubQuery, { SUB_QUERY_KEY } from '@hooks/useSubQuery';
+import { useAppSelector } from '@redux/storeHooks';
 
-import axios from '../../utils/axios';
+import axios from '@utils/axios';
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
