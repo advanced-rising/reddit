@@ -5,14 +5,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import postApi from '../apis/postApi';
-import subApi from '../apis/subApi';
+
 import PostCard from '../components/PostCard';
 import useAccount from '../hooks/useAccount';
 import { useAppSelector } from '../redux/storeHooks';
 import { Post, Sub, User } from '../types/dto';
 import axios from '../utils/axios';
 import qs from 'qs';
+import useSubQuery from '../hooks/useSubQuery';
 
 export const getServerSideProps = async ({ req, res }: GetServerSidePropsContext) => {
   try {
@@ -36,43 +36,12 @@ const Home: NextPage<HomeProps> = ({ data }) => {
   const router = useRouter();
   const { account } = useAccount();
   const { user } = useAppSelector((state) => state.user);
+  const { topSubs } = useSubQuery({});
 
-  const { data: topSubs } = useQuery(
-    ['topSubs'],
-    async () => {
-      const result = await subApi.findByTop();
-      return result;
-    },
-    {},
-  );
-
+  console.log('topSubs', topSubs);
   const [query, setQuery] = useState({
     page: 1,
   });
-
-  const {
-    status,
-    data: posts,
-    error,
-    isFetching,
-    isFetchingNextPage,
-    isFetchingPreviousPage,
-    fetchNextPage,
-    fetchPreviousPage,
-    hasNextPage,
-    hasPreviousPage,
-  } = useInfiniteQuery(
-    ['post'],
-    async ({ pageParam = 0 }) => {
-      setQuery({ page: pageParam });
-      const result = postApi.findAll(qs.stringify(query));
-      return result;
-    },
-    // {
-    //   getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
-    //   getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
-    // },
-  );
 
   return (
     <div className='flex max-w-5xl px-4 pt-5 mx-auto'>

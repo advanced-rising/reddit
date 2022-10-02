@@ -11,6 +11,23 @@ interface CreateTypes {
   description: string;
 }
 
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  try {
+    const cookie = req.headers.cookie;
+    // 쿠키 없다면 에러 보내기
+    if (!cookie) throw new Error('Missing auth token cookie');
+
+    // 쿠키 있다면 쿠키를 이용해서 벡엔드 인증처리하기
+    await axios.get('/auth/me', { headers: { cookie } });
+
+    return { props: {} };
+  } catch (error) {
+    // 쿠키인증 처리에 에러가 나면 로그인 페이지로 이동
+    res.writeHead(307, { Location: '/login' }).end();
+    return { props: {} };
+  }
+};
+
 const SubCreate = () => {
   const router = useRouter();
   const qc = useQueryClient();
@@ -102,20 +119,3 @@ const SubCreate = () => {
 };
 
 export default SubCreate;
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  try {
-    const cookie = req.headers.cookie;
-    // 쿠키 없다면 에러 보내기
-    if (!cookie) throw new Error('Missing auth token cookie');
-
-    // 쿠키 있다면 쿠키를 이용해서 벡엔드 인증처리하기
-    await axios.get('/auth/me', { headers: { cookie } });
-
-    return { props: {} };
-  } catch (error) {
-    // 쿠키인증 처리에 에러가 나면 로그인 페이지로 이동
-    res.writeHead(307, { Location: '/login' }).end();
-    return { props: {} };
-  }
-};

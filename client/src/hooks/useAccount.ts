@@ -6,15 +6,15 @@ import { useAppDispatch, useAppSelector } from '../redux/storeHooks';
 import { useEffect, useState } from 'react';
 import { login } from '../redux/slices/user';
 
+export const ACCOUNT_QUERY_KEY = {
+  ACCOUNT: ['account'],
+};
+
 export default function useAccount() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [isTrue, setIsTrue] = useState(false);
   const { user } = useAppSelector((state) => state.user);
-  const fetchAccount = async (): Promise<User> => {
-    const { data } = await axios.get('/auth/me', { withCredentials: true });
-    return data;
-  };
 
   useEffect(() => {
     const _local = localStorage.getItem('superSecret');
@@ -25,9 +25,10 @@ export default function useAccount() {
   }, [user]);
 
   const { data: account } = useQuery(
-    ['user'],
-    async () => {
-      await fetchAccount();
+    ACCOUNT_QUERY_KEY.ACCOUNT,
+    async (): Promise<User> => {
+      const { data } = await axios.get('/auth/me', { withCredentials: true });
+      return data;
     },
     {
       enabled: Boolean(isTrue),
