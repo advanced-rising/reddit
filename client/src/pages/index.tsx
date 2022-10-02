@@ -35,7 +35,6 @@ const Home: NextPage<HomeProps> = ({ data }) => {
   const { user } = useAppSelector((state) => state.user);
   const { topSubs } = useSubQuery({});
 
-  console.log('topSubs', topSubs);
   const [query, setQuery] = useState({
     page: 1,
   });
@@ -83,7 +82,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
           {user && (
             <div className='w-full py-6 text-center'>
               <Link href='/subs/create'>
-                <a className='w-full p-2 text-center text-white bg-gray-400 rounded'>
+                <a className='w-full p-2 text-center text-white bg-red-400 rounded'>
                   커뮤니티 만들기
                 </a>
               </Link>

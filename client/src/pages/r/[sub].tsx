@@ -13,6 +13,7 @@ import useSubQuery, { SUB_QUERY_KEY } from '@hooks/useSubQuery';
 import { useAppSelector } from '@redux/storeHooks';
 
 import axios from '@utils/axios';
+import { Post } from '@_types/dto';
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
@@ -77,18 +78,31 @@ const SubPage = ({ data }: any) => {
     }
   };
 
+  let renderPosts;
+  if (!subsName) {
+    renderPosts = <p className='text-lg text-center'>로딩중...</p>;
+  } else if (subsName.posts.length === 0) {
+    renderPosts = <p className='text-lg text-center'>아직 작성된 포스트가 없습니다.</p>;
+  } else {
+    renderPosts = subsName.posts.map((post: Post) => (
+      <PostCard key={post.identifier} post={post} />
+    ));
+  }
+
   return (
     <>
       {subsName && (
         <>
           <div>
-            <input
-              type='file'
-              hidden={true}
-              ref={fileInputRef}
-              onChange={uploadImage}
-              accept='image/*'
-            />
+            {ownSub && (
+              <input
+                type='file'
+                hidden={true}
+                ref={fileInputRef}
+                onChange={uploadImage}
+                accept='image/*'
+              />
+            )}
             {/* 배너 이미지 */}
             <div className={cls(ownSub ? 'cursor-pointer' : '', `bg-gray-400 h-56 `)}>
               {subsName.bannerUrl ? (
@@ -116,7 +130,7 @@ const SubPage = ({ data }: any) => {
                       alt='커뮤니티 이미지'
                       width={70}
                       height={70}
-                      className='rounded-full cursor-pointer '
+                      className={cls(ownSub && 'cursor-pointer', 'rounded-full')}
                       onClick={() => openFileInput('image')}
                     />
                   )}
@@ -132,7 +146,10 @@ const SubPage = ({ data }: any) => {
           </div>
           {/* 포스트와 사이드바 */}
           <div className='flex max-w-5xl px-4 pt-5 mx-auto'>
-            <div className='w-full md:mr-3 md:w-8/12'> </div>
+            <div className='w-full md:mr-3 md:w-8/12'>
+              {subsName &&
+                subsName.posts.map((post: Post) => <PostCard key={post.identifier} post={post} />)}
+            </div>
             <SideBar sub={subsName} />
           </div>
         </>

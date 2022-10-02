@@ -2,7 +2,7 @@ import axios from '@utils/axios';
 import { Post } from '@_types/dto';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import React, { FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   try {
@@ -21,26 +21,39 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 };
 
 const PostCreate = () => {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const [createPost, setCreatePost] = useState<{ title: string; body: string }>({
+    title: '',
+    body: '',
+  });
+
   const router = useRouter();
   const { sub: subName } = router.query;
   const submitPost = async (e: FormEvent) => {
     e.preventDefault();
-    if (title.trim() === '' || !subName) return;
+    if (createPost.title.trim() === '' || !subName) return;
 
     try {
       const { data: post } = await axios.post<Post>('/posts', {
-        title: title.trim(),
-        body,
+        title: createPost.title.trim(),
+        body: createPost.body,
         sub: subName,
       });
 
-      router.push(`/r/${subName}/${post.identifier}/${post.slug}`);
+      router.push({
+        pathname: `/r/${subName}/${post.identifier}/${post.slug}`,
+        query: { identifier: post.identifier, slug: post.slug },
+      });
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { value, name } = event.target;
+
+    setCreatePost({ ...createPost, [name]: value });
+  };
+
   return (
     <div className='flex flex-col justify-center pt-16'>
       <div className='w-10/12 mx-auto md:w-96'>
@@ -53,24 +66,28 @@ const PostCreate = () => {
                 className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500'
                 placeholder='제목'
                 maxLength={20}
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={createPost.title}
+                name='title'
+                onChange={handleChange}
               />
               <div
                 style={{ top: 10, right: 10 }}
                 className='absolute mb-2 text-sm text-gray-400 select-none'>
-                {title.trim().length}/20
+                {createPost.title.trim().length}/20
               </div>
             </div>
             <textarea
               rows={4}
               placeholder='설명'
               className='w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500'
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
+              value={createPost.body}
+              name='body'
+              onChange={handleChange}
             />
             <div className='flex justify-end'>
-              <button className='px-4 py-1 text-sm font-semibold text-white bg-gray-400 border rounded'>
+              <button
+                disabled={createPost.title.length === 0 || createPost.body.length === 0}
+                className='px-4 py-1 text-sm font-semibold text-white disabled:bg-gray-400 border rounded bg-red-400'>
                 생성하기
               </button>
             </div>

@@ -11,8 +11,6 @@ import { Post } from '@_types/dto';
 
 interface PostCardProps {
   post: Post;
-  subMutate?: () => void;
-  mutate?: () => void;
 }
 
 const PostCard = ({
@@ -30,8 +28,6 @@ const PostCard = ({
     username,
     sub,
   },
-  mutate,
-  subMutate,
 }: PostCardProps) => {
   const router = useRouter();
   const isInSubPage = router.pathname === '/r/[sub]';
@@ -45,8 +41,6 @@ const PostCard = ({
 
     try {
       await axios.post('/votes', { identifier, slug, value });
-      if (mutate) mutate();
-      if (subMutate) subMutate();
     } catch (error) {
       console.log(error);
     }
