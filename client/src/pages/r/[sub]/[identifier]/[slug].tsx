@@ -75,12 +75,12 @@ const PostPage = ({ data }: any) => {
 
   return (
     <SubLayout data={data}>
-      <div className='flex w-full mx-auto'>
+      <div className='flex w-full mx-auto '>
         <div className='w-full'>
           <div className='bg-white rounded w-full'>
             {post && (
               <>
-                <div className='flex'>
+                <div className='flex '>
                   {/* 좋아요 싫어요 기능 부분 */}
                   <div className='flex-shrink-0 w-10 py-2 text-center rounded-l'>
                     {/* 좋아요 */}
@@ -165,7 +165,9 @@ const PostPage = ({ data }: any) => {
                 </div>
                 {/* 댓글 리스트 부분 */}
                 {comments?.map((comment) => (
-                  <div className='flex' key={comment.identifier}>
+                  <div
+                    className='flex justify-start items-start border m-2 rounded-lg'
+                    key={comment.identifier}>
                     {/* 좋아요 싫어요 기능 부분 */}
                     <div className='flex-shrink-0 w-10 py-2 text-center rounded-l'>
                       {/* 좋아요 */}
@@ -191,7 +193,7 @@ const PostPage = ({ data }: any) => {
                       </div>
                     </div>
 
-                    <div className='py-2 pr-2'>
+                    <div className='flex flex-col py-2 pr-2'>
                       <p className='mb-1 text-xs leading-none'>
                         <Link href={`/u/${comment.username}`}>
                           <a className='mr-1 font-bold hover:underline'>{comment.username}</a>
@@ -201,7 +203,7 @@ const PostPage = ({ data }: any) => {
                         posts${dayjs(comment.createdAt).format('YYYY-MM-DD HH:mm')}`}
                         </span>
                       </p>
-                      <p>{comment.body}</p>
+                      <p className=' whitespace-normal break-all	'>{comment.body}</p>
                     </div>
                   </div>
                 ))}
