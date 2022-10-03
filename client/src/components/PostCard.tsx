@@ -13,8 +13,8 @@ interface PostCardProps {
   post: Post;
 }
 
-const PostCard = ({
-  post: {
+const PostCard = (props: PostCardProps) => {
+  const {
     identifier,
     slug,
     title,
@@ -27,8 +27,7 @@ const PostCard = ({
     url,
     username,
     sub,
-  },
-}: PostCardProps) => {
+  } = props.post;
   const router = useRouter();
   const isInSubPage = router.pathname === '/r/[sub]';
 
@@ -45,6 +44,8 @@ const PostCard = ({
       console.log(error);
     }
   };
+
+  // console.log('props.post', props.post);
 
   return (
     <div className='flex mb-4 bg-white rounded' id={identifier}>

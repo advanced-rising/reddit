@@ -23,7 +23,7 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <div className='fixed inset-x-0 top-0 z-10 flex items-center justify-between px-5 bg-white h-13 py-2'>
+    <div className='fixed inset-x-0 top-0 z-10 flex items-center justify-between px-5 bg-white h-14'>
       <span className='text-2xl font-semibold text-gray-400'>
         <Link href='/'>
           <a className='relative w-20 h-12 flex'>

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { Comment, Post } from '../types/dto';
 import axios from '@utils/axios';
 
@@ -9,21 +9,36 @@ export const POST_QUERY_KEY = {
 };
 
 interface usePostQueryTypes {
-  query?: string;
+  query?: string | number;
   options?: any;
   identifier?: string;
   slug?: string;
 }
 
 const usePostQuery = (props: usePostQueryTypes) => {
-  const { query, options, identifier, slug } = props;
-  const { data: posts } = useQuery(
+  const { query = 0, options, identifier, slug } = props;
+
+  const {
+    status,
+    data: posts,
+    error,
+    isFetching,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    fetchNextPage,
+    fetchPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+  } = useInfiniteQuery(
     [POST_QUERY_KEY.POSTS],
-    async (): Promise<Post[]> => {
-      const { data } = await axios.get(`/posts?${query}`);
+    async ({ pageParam = query }): Promise<Post[] | any> => {
+      const { data } = await axios.get(`/posts?${pageParam}`);
       return data;
     },
-    options,
+    {
+      getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
+      getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
+    },
   );
 
   const { data: post } = useQuery(
@@ -52,6 +67,7 @@ const usePostQuery = (props: usePostQueryTypes) => {
     posts,
     post,
     comments,
+    fetchNextPage,
   };
 };
 

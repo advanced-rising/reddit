@@ -49,7 +49,7 @@ const MyApp = ({ Component, pageProps }: MyAppProps) => {
         <Hydrate state={pageProps?.dehydratedState}>
           <Provider store={store}>
             {!authRoute && <NavBar />}
-            <div className={authRoute ? '' : 'pt-12 bg-gray-200 min-h-screen'}>
+            <div className={authRoute ? '' : 'bg-gray-200 pt-14 min-h-screen'}>
               {getLayout(<Component {...pageProps} />)}
             </div>
           </Provider>
