@@ -72,9 +72,9 @@ const PostPage = ({ data }: any) => {
 
   return (
     <SubLayout data={data}>
-      <div className='flex max-w-5xl px-4 pt-5 mx-auto'>
-        <div className='w-full md:mr-3 md:w-8/12'>
-          <div className='bg-white rounded'>
+      <div className='flex w-full mx-auto'>
+        <div className='w-full'>
+          <div className='bg-white rounded w-full'>
             {post && (
               <>
                 <div className='flex'>
