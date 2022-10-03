@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -14,6 +13,7 @@ import { GetServerSideProps } from 'next';
 import { Comment } from '@_types/dto';
 import useAccount from '@hooks/useAccount';
 import SubLayout from '@components/layout/SubLayout';
+import axios from '@utils/axios';
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
@@ -31,7 +31,10 @@ const PostPage = ({ data }: any) => {
   const { account } = useAccount();
   const [newComment, setNewComment] = useState('');
 
-  const { post, comments } = usePostQuery({ identifier: data.identifier, slug: data.slug });
+  const { post, comments } = usePostQuery({
+    identifier: data.identifier,
+    slug: data.slug,
+  });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -124,7 +127,7 @@ const PostPage = ({ data }: any) => {
                 </div>
 
                 {/* 댓글 작성 구간 */}
-                <div className='pr-6 mb-4 pl-9'>
+                <div className='pr-6 pb-4 pl-9'>
                   {user ? (
                     <div>
                       <p className='mb-1 text-xs'>
@@ -138,9 +141,9 @@ const PostPage = ({ data }: any) => {
                           className='w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-gray-600'
                           onChange={(e) => setNewComment(e.target.value)}
                           value={newComment}></textarea>
-                        <div className='flex justify-end'>
+                        <div className='flex justify-end pt-2'>
                           <button
-                            className='px-3 py-1 text-white bg-gray-400 rounded'
+                            className='px-3 py-1 text-white disabled:bg-gray-400 rounded bg-red-400'
                             disabled={newComment.trim() === ''}>
                             댓글 작성
                           </button>

@@ -41,7 +41,10 @@ export default class Comment extends BaseEntity {
 
   @Expose() get voteScore(): number {
     const initialValue = 0;
-    return this.votes?.reduce((previousValue, currentObject) => previousValue + (currentObject.value || 0), initialValue);
+    return this.votes?.reduce(
+      (previousValue, currentObject) => previousValue + (currentObject.value || 0),
+      initialValue
+    );
   }
 
   @BeforeInsert()
