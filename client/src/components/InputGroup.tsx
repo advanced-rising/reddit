@@ -19,7 +19,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
         autoComplete='off'
         style={{ minWidth: 300 }}
         className={cls(
-          `w-full p-3 transition duration-200 border border-gray-400 rounded bg-gray-50 focus:bg-white hover:bg-white`,
+          `w-full rounded border border-gray-400 bg-gray-50 p-3 transition duration-200 hover:bg-white focus:bg-white`,
           {
             'border-red-500': error,
           },

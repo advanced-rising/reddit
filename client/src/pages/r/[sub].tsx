@@ -1,18 +1,12 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { GetServerSideProps, NextPage } from 'next';
-import cls from 'classnames';
-import Image from 'next/image';
-import Link from 'next/link';
+
 import { useRouter } from 'next/router';
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PostCard from '@components/PostCard';
-import SideBar from '@components/SideBar';
-import useAccount from '@hooks/useAccount';
-import useSubQuery, { SUB_QUERY_KEY } from '@hooks/useSubQuery';
-import { useAppSelector } from '@redux/storeHooks';
 
-import axios from '@utils/axios';
+import useSubQuery, { SUB_QUERY_KEY } from '@hooks/useSubQuery';
+
 import { Post } from '@_types/dto';
 import SubLayout from '@components/layout/SubLayout';
 
@@ -46,7 +40,9 @@ const SubPage = ({ data }: SubPageProps) => {
   return (
     <SubLayout data={data}>
       {subsName &&
-        subsName.posts.map((post: Post) => <PostCard key={post.identifier} post={post} />)}
+        subsName.posts.map((post: Post) => (
+          <PostCard key={post.identifier} post={post} />
+        ))}
     </SubLayout>
   );
 };

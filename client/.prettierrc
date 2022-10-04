@@ -8,5 +8,6 @@
   "semi": true,
   "useTabs": false,
   "bracketSpacing": true,
-  "jsxSingleQuote": true
+  "jsxSingleQuote": true,
+  "tailwindConfig": "./tailwind.config.js"
 }

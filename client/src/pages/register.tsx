@@ -45,8 +45,8 @@ const Register = () => {
 
   return (
     <div className='bg-white'>
-      <div className='flex flex-col items-center justify-center h-screen p-6'>
-        <div className='w-10/12 mx-auto md:w-96'>
+      <div className='flex h-screen flex-col items-center justify-center p-6'>
+        <div className='mx-auto w-10/12 md:w-96'>
           <h1 className='mb-2 text-lg font-medium'>회원가입</h1>
           <form onSubmit={handleSubmit}>
             <InputGroup
@@ -75,18 +75,20 @@ const Register = () => {
             />
             <button
               disabled={
-                sign.email.length === 0 || sign.username.length === 0 || sign.password.length === 0
+                sign.email.length === 0 ||
+                sign.username.length === 0 ||
+                sign.password.length === 0
               }
-              className='w-full py-4 mb-1 text-xs font-bold 
-            text-white uppercase bg-red-400 border border-red-400 rounded
-            disabled:bg-gray-400 disabled:border-gray-400'>
+              className='mb-1 w-full rounded border border-red-400 
+            bg-red-400 py-4 text-xs font-bold uppercase text-white
+            disabled:border-gray-400 disabled:bg-gray-400'>
               회원 가입
             </button>
           </form>
           <small>
             이미 가입하셨나요?
             <Link href='/login'>
-              <a className='ml-1 text-blue-500 uppercase'>로그인</a>
+              <a className='ml-1 uppercase text-blue-500'>로그인</a>
             </Link>
           </small>
         </div>

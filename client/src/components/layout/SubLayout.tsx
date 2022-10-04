@@ -4,7 +4,13 @@ import cls from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { ChangeEvent, ReactNode, useEffect, useRef, useState } from 'react';
+import React, {
+  ChangeEvent,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import PostCard from '@components/PostCard';
 import SideBar from '@components/SideBar';
@@ -98,7 +104,11 @@ const SubLayout = (props: SubLayoutProps) => {
               />
             )}
             {/* 배너 이미지 */}
-            <div className={cls(ownSub ? 'cursor-pointer' : '', `bg-gray-400 h-56 `)}>
+            <div
+              className={cls(
+                ownSub ? 'cursor-pointer' : '',
+                `h-56 bg-gray-400 `,
+              )}>
               {subsName.bannerUrl ? (
                 <div
                   className={cls(ownSub ? 'cursor-pointer' : '', 'h-56 ')}
@@ -111,20 +121,27 @@ const SubLayout = (props: SubLayoutProps) => {
                   onClick={() => openFileInput('banner')}
                 />
               ) : (
-                <div className='h-20 bg-gray-400' onClick={() => openFileInput('banner')}></div>
+                <div
+                  className='h-20 bg-gray-400'
+                  onClick={() => openFileInput('banner')}></div>
               )}
             </div>
             {/* 커뮤니티 메타 데이터 */}
             <div className='h-20 bg-white'>
-              <div className='relative flex max-w-5xl px-5 mx-auto'>
-                <div className='absolute bg-center bg-cover bg-no-repeat' style={{ top: -15 }}>
+              <div className='relative mx-auto flex max-w-5xl px-5'>
+                <div
+                  className='absolute bg-cover bg-center bg-no-repeat'
+                  style={{ top: -15 }}>
                   {subsName.imageUrl && (
                     <Image
                       src={subsName.imageUrl}
                       alt='커뮤니티 이미지'
                       width={70}
                       height={70}
-                      className={cls(ownSub && 'cursor-pointer', 'rounded-full')}
+                      className={cls(
+                        ownSub && 'cursor-pointer',
+                        'rounded-full',
+                      )}
                       onClick={() => openFileInput('image')}
                     />
                   )}
@@ -133,13 +150,15 @@ const SubLayout = (props: SubLayoutProps) => {
                   <div className='flex items-center'>
                     <h1 className='text-3xl font-bold '>{subsName.title}</h1>
                   </div>
-                  <p className='font-bold text-gray-400 text-small'>/r/{subsName.name}</p>
+                  <p className='text-small font-bold text-gray-400'>
+                    /r/{subsName.name}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
           {/* 포스트와 사이드바 */}
-          <div className='flex max-w-5xl px-4 pt-5 mx-auto'>
+          <div className='mx-auto flex max-w-5xl px-4 pt-5'>
             <div className='w-full md:mr-3 md:w-8/12'>{children}</div>
             <SideBar sub={subsName} />
           </div>

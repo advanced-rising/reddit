@@ -80,17 +80,17 @@ const PostPage = ({ data }: any) => {
 
   return (
     <SubLayout data={data}>
-      <div className='flex w-full mx-auto '>
+      <div className='mx-auto flex w-full '>
         <div className='w-full'>
-          <div className='bg-white rounded w-full mb-4'>
+          <div className='mb-4 w-full rounded bg-white'>
             {post && (
               <>
                 <div className='flex '>
                   {/* 좋아요 싫어요 기능 부분 */}
-                  <div className=' w-10 py-2 rounded-l justify-start items-center flex-col flex'>
+                  <div className=' flex w-10 flex-col items-center justify-start rounded-l py-2'>
                     {/* 좋아요 */}
                     <div
-                      className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-red-500'
+                      className='mx-auto flex w-6 cursor-pointer justify-center rounded text-gray-400 hover:bg-gray-300 hover:text-red-500'
                       onClick={() => vote(1)}>
                       {post.userVote === 1 ? (
                         <FaChevronUp className='text-red-500' />
@@ -101,7 +101,7 @@ const PostPage = ({ data }: any) => {
                     <p className='text-xs font-bold'>{post.voteScore}</p>
                     {/* 싫어요 */}
                     <div
-                      className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-blue-500'
+                      className='mx-auto flex w-6 cursor-pointer justify-center rounded text-gray-400 hover:bg-gray-300 hover:text-blue-500'
                       onClick={() => vote(-1)}>
                       {post.userVote === -1 ? (
                         <FaChevronDown className='text-blue-500' />
@@ -112,7 +112,7 @@ const PostPage = ({ data }: any) => {
                   </div>
                   <div className='py-2 pr-2'>
                     <div className='flex items-center'>
-                      <p className='text-xs test-gray-400'>
+                      <p className='test-gray-400 text-xs'>
                         Posted by <i className='fas fa-abacus'></i>
                         <Link href={`/u/${post.username}`}>
                           <a className='mx-1 hover:underline'>
@@ -130,7 +130,7 @@ const PostPage = ({ data }: any) => {
                     <p className='my-3 text-sm'>{post.body}</p>
                     <div className='flex'>
                       <button>
-                        <i className='mr-1 fas fa-comment-alt fa-xs'></i>
+                        <i className='fas fa-comment-alt fa-xs mr-1'></i>
                         <span className='font-bold'>
                           {post.commentCount} Comments
                         </span>
@@ -153,12 +153,12 @@ const PostPage = ({ data }: any) => {
                       </p>
                       <form onSubmit={handleSubmit}>
                         <textarea
-                          className='w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-gray-600'
+                          className='w-full rounded border border-gray-300 p-3 focus:border-gray-600 focus:outline-none'
                           onChange={(e) => setNewComment(e.target.value)}
                           value={newComment}></textarea>
                         <div className='flex justify-end pt-2'>
                           <button
-                            className='px-3 py-1 text-white disabled:bg-gray-400 rounded bg-red-400'
+                            className='rounded bg-red-400 px-3 py-1 text-white disabled:bg-gray-400'
                             disabled={newComment.trim() === ''}>
                             댓글 작성
                           </button>
@@ -166,13 +166,13 @@ const PostPage = ({ data }: any) => {
                       </form>
                     </div>
                   ) : (
-                    <div className='flex items-center justify-between px-2 py-4 border border-gray-200 rounded'>
+                    <div className='flex items-center justify-between rounded border border-gray-200 px-2 py-4'>
                       <p className='font-semibold text-gray-400'>
                         댓글 작성을 위해서 로그인 해주세요.
                       </p>
                       <div>
                         <Link href={`/login`}>
-                          <a className='px-3 py-1 text-white bg-gray-400 rounded'>
+                          <a className='rounded bg-gray-400 px-3 py-1 text-white'>
                             로그인
                           </a>
                         </Link>
@@ -181,16 +181,16 @@ const PostPage = ({ data }: any) => {
                   )}
                 </div>
                 {/* 댓글 리스트 부분 */}
-                <ul className='w-full pb-2 px-2 flex justify-center items-center flex-col gap-2'>
+                <ul className='flex w-full flex-col items-center justify-center gap-2 px-2 pb-2'>
                   {comments?.map((comment) => (
                     <li
-                      className='flex justify-start items-start border rounded-lg w-full'
+                      className='flex w-full items-start justify-start rounded-lg border'
                       key={comment.identifier}>
                       {/* 좋아요 싫어요 기능 부분 */}
-                      <div className='flex-shrink-0 w-10 py-2 text-center rounded-l'>
+                      <div className='w-10 flex-shrink-0 rounded-l py-2 text-center'>
                         {/* 좋아요 */}
                         <div
-                          className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-red-500'
+                          className='mx-auto flex w-6 cursor-pointer justify-center rounded text-gray-400 hover:bg-gray-300 hover:text-red-500'
                           onClick={() => vote(1, comment)}>
                           {comment.userVote === 1 ? (
                             <FaChevronUp className='text-red-500' />
@@ -201,7 +201,7 @@ const PostPage = ({ data }: any) => {
                         <p className='text-xs font-bold'>{comment.voteScore}</p>
                         {/* 싫어요 */}
                         <div
-                          className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-blue-500'
+                          className='mx-auto flex w-6 cursor-pointer justify-center rounded text-gray-400 hover:bg-gray-300 hover:text-blue-500'
                           onClick={() => vote(-1, comment)}>
                           {comment.userVote === -1 ? (
                             <FaChevronDown className='text-blue-500' />

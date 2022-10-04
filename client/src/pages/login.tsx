@@ -62,8 +62,8 @@ const Login = () => {
 
   return (
     <div className='bg-white'>
-      <div className='flex flex-col items-center justify-center h-screen p-6'>
-        <div className='w-10/12 mx-auto md:w-96'>
+      <div className='flex h-screen flex-col items-center justify-center p-6'>
+        <div className='mx-auto w-10/12 md:w-96'>
           <h1 className='mb-2 text-lg font-medium'>로그인</h1>
           <form onSubmit={handleSubmit}>
             <InputGroup
@@ -83,10 +83,12 @@ const Login = () => {
               type='password'
             />
             <button
-              disabled={sign.username.length === 0 || sign.password.length === 0}
-              className='w-full py-4 mb-1 text-xs font-bold text-white 
-            uppercase bg-red-400 border border-red-400 rounded
-            disabled:bg-gray-400 disabled:border-gray-400
+              disabled={
+                sign.username.length === 0 || sign.password.length === 0
+              }
+              className='mb-1 w-full rounded border border-red-400 bg-red-400 
+            py-4 text-xs font-bold uppercase text-white
+            disabled:border-gray-400 disabled:bg-gray-400
             '>
               로그인
             </button>
@@ -94,7 +96,7 @@ const Login = () => {
           <small>
             아직 아이디가 없나요?
             <Link href='/register'>
-              <a className='ml-1 text-blue-500 uppercase'>회원가입</a>
+              <a className='ml-1 uppercase text-blue-500'>회원가입</a>
             </Link>
           </small>
         </div>

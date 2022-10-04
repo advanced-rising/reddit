@@ -12,14 +12,14 @@ const SideBar = ({ sub }: Props) => {
   const { user } = useAppSelector((state) => state.user);
 
   return (
-    <div className='hidden w-4/12 ml-3 md:block'>
-      <div className='bg-white border rounded'>
-        <div className='p-3 bg-red-400 rounded-t'>
+    <div className='ml-3 hidden w-4/12 md:block'>
+      <div className='rounded border bg-white'>
+        <div className='rounded-t bg-red-400 p-3'>
           <p className='font-semibold text-white'>Info. 커뮤니티</p>
         </div>
         <div className='p-3'>
           <p className='mb-3 text-base'>{sub?.description}</p>
-          <div className='flex mb-3 text-sm font-medium'>
+          <div className='mb-3 flex text-sm font-medium'>
             <div className='w-1/2'>
               <p>100</p>
               <p>멤버</p>
@@ -30,7 +30,9 @@ const SideBar = ({ sub }: Props) => {
           {user && (
             <div className='mx-0 my-2'>
               <Link href={`/r/${sub.name}/create`}>
-                <a className='w-full p-2 text-sm text-white bg-red-400 rounded'>포스트 생성</a>
+                <a className='w-full rounded bg-red-400 p-2 text-sm text-white'>
+                  포스트 생성
+                </a>
               </Link>
             </div>
           )}

@@ -56,12 +56,12 @@ const PostCard = (props: PostCardProps) => {
   // console.log('props.post', props.post);
 
   return (
-    <div className='flex mb-4 bg-white rounded' id={identifier}>
+    <div className='mb-4 flex rounded bg-white' id={identifier}>
       {/* 좋아요 싫어요 기능 부분 */}
-      <div className=' w-10 py-2 rounded-l justify-start items-center flex-col flex'>
+      <div className='flex w-10 flex-col items-center justify-start rounded-l py-2'>
         {/* 좋아요 */}
         <div
-          className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-red-500'
+          className='mx-auto flex w-6 cursor-pointer justify-center rounded text-gray-400 hover:bg-gray-300 hover:text-red-500'
           onClick={() => vote(1)}>
           {userVote === 1 ? (
             <FaChevronUp className='text-red-500' />
@@ -72,7 +72,7 @@ const PostCard = (props: PostCardProps) => {
         <p className='text-xs font-bold'>{voteScore}</p>
         {/* 싫어요 */}
         <div
-          className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-blue-500'
+          className='mx-auto flex w-6 cursor-pointer justify-center rounded text-gray-400 hover:bg-gray-300 hover:text-blue-500'
           onClick={() => vote(-1)}>
           {userVote === -1 ? (
             <FaChevronDown className='text-blue-500' />
@@ -91,14 +91,14 @@ const PostCard = (props: PostCardProps) => {
                   <Image
                     src={sub!.imageUrl}
                     alt='sub'
-                    className='rounded-full cursor-pointer'
+                    className='cursor-pointer rounded-full'
                     width={12}
                     height={12}
                   />
                 </a>
               </Link>
               <Link href={`/r/${subName}`}>
-                <a className='ml-2 text-xs font-bold cursor-pointer hover:underline'>
+                <a className='ml-2 cursor-pointer text-xs font-bold hover:underline'>
                   /r/{subName}
                 </a>
               </Link>
@@ -126,7 +126,7 @@ const PostCard = (props: PostCardProps) => {
         <div className='flex'>
           <Link href={url}>
             <a>
-              <i className='mr-1 fas fa-comment-alt fa-xs'></i>
+              <i className='fas fa-comment-alt fa-xs mr-1'></i>
               <span>{commentCount}</span>
             </a>
           </Link>

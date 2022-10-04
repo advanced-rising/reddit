@@ -4,7 +4,12 @@ import type { AppContext, AppInitialProps, AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import NavBar from '../components/NavBar';
 
-import { Hydrate, QueryClient, QueryClientProvider, dehydrate } from '@tanstack/react-query';
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+  dehydrate,
+} from '@tanstack/react-query';
 import { Provider } from 'react-redux';
 import { store } from '@redux/store';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -49,7 +54,7 @@ const MyApp = ({ Component, pageProps }: MyAppProps) => {
         <Hydrate state={pageProps?.dehydratedState}>
           <Provider store={store}>
             {!authRoute && <NavBar />}
-            <div className={authRoute ? '' : 'bg-gray-200 pt-14 min-h-screen'}>
+            <div className={authRoute ? '' : 'min-h-screen bg-gray-200 pt-14'}>
               {getLayout(<Component {...pageProps} />)}
             </div>
           </Provider>
@@ -60,7 +65,10 @@ const MyApp = ({ Component, pageProps }: MyAppProps) => {
   );
 };
 
-MyApp.getInitialProps = async ({ Component, ctx }: AppContext): Promise<AppInitialProps> => {
+MyApp.getInitialProps = async ({
+  Component,
+  ctx,
+}: AppContext): Promise<AppInitialProps> => {
   let pageProps = {};
 
   if (Component.getInitialProps) {

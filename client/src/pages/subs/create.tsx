@@ -58,13 +58,15 @@ const SubCreate = () => {
 
   return (
     <div className='flex flex-col justify-center pt-16'>
-      <div className='w-10/12 p-4 mx-auto bg-white rounded md:w-96'>
+      <div className='mx-auto w-10/12 rounded bg-white p-4 md:w-96'>
         <h1 className='mb-2 text-lg font-medium'>커뮤니티 만들기</h1>
         <hr />
         <form onSubmit={handleSubmit}>
           <div className='my-6'>
             <p className='font-medium'>Name</p>
-            <p className='mb-2 text-xs text-gray-400'>커뮤니티 이름은 변경할 수 없습니다.</p>
+            <p className='mb-2 text-xs text-gray-400'>
+              커뮤니티 이름은 변경할 수 없습니다.
+            </p>
             <InputGroup
               placeholder='이름'
               value={create.name}
@@ -90,7 +92,9 @@ const SubCreate = () => {
           </div>
           <div className='my-6'>
             <p className='font-medium'>Description</p>
-            <p className='mb-2 text-xs text-gray-400'>해당 커뮤니티에 대한 설명입니다.</p>
+            <p className='mb-2 text-xs text-gray-400'>
+              해당 커뮤니티에 대한 설명입니다.
+            </p>
             <InputGroup
               placeholder='설명'
               value={create.description}
@@ -107,8 +111,8 @@ const SubCreate = () => {
                 create.title.length === 0 ||
                 create.description.length === 0
               }
-              className='px-4 py-2 text-sm font-semibold text-white bg-red-400 
-                border rounded disabled:bg-gray-400'>
+              className='rounded border bg-red-400 px-4 py-2 text-sm 
+                font-semibold text-white disabled:bg-gray-400'>
               커뮤니티 만들기
             </button>
           </div>

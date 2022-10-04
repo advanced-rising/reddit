@@ -24,28 +24,33 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <div className='fixed inset-x-0 top-0 z-10 flex items-center justify-between px-5 bg-white h-14'>
+    <div className='fixed inset-x-0 top-0 z-10 flex h-14 items-center justify-between bg-white px-5'>
       <span className='text-2xl font-semibold text-gray-400'>
         <Link href='/'>
-          <a className='relative w-20 h-12 flex'>
-            <Image src='/reddit-name-logo.png' alt='logo' layout='fill' objectFit='contain' />
+          <a className='relative flex h-12 w-20'>
+            <Image
+              src='/reddit-name-logo.png'
+              alt='logo'
+              layout='fill'
+              objectFit='contain'
+            />
           </a>
         </Link>
       </span>
       <div className='max-w-full px-4'>
-        <div className='relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white'>
+        <div className='relative flex items-center rounded border bg-gray-100 hover:border-gray-700 hover:bg-white'>
           <FaSearch className='ml-2 text-gray-400' />
           <input
             type='text'
             placeholder='Search Reddit'
-            className='px-3 py-1 bg-transparent rounded h-7 focus:outline-none'
+            className='h-7 rounded bg-transparent px-3 py-1 focus:outline-none'
           />
         </div>
       </div>
       {user && (
         <div className='flex'>
           <button
-            className='w-20 px-2 mr-2 text-sm text-center text-white bg-red-400 rounded h-7'
+            className='mr-2 h-7 w-20 rounded bg-red-400 px-2 text-center text-sm text-white'
             onClick={handleLogout}>
             로그아웃
           </button>
@@ -55,12 +60,12 @@ const NavBar: React.FC = () => {
       {!user && (
         <div className='flex'>
           <Link href='/login' passHref>
-            <a className='w-20 px-2 pt-1 mr-2 text-sm text-center text-red-500 border border-red-500 rounded h-7'>
+            <a className='mr-2 h-7 w-20 rounded border border-red-500 px-2 pt-1 text-center text-sm text-red-500'>
               로그인
             </a>
           </Link>
           <Link href='/register' passHref>
-            <a className='w-20 px-2 pt-1 text-sm text-center text-white bg-red-400 rounded h-7'>
+            <a className='h-7 w-20 rounded bg-red-400 px-2 pt-1 text-center text-sm text-white'>
               회원가입
             </a>
           </Link>

@@ -15,7 +15,10 @@ import PostCard from '@components/PostCard';
 import qs from 'qs';
 import { useInView } from 'react-intersection-observer';
 
-export const getServerSideProps = async ({ req, res }: GetServerSidePropsContext) => {
+export const getServerSideProps = async ({
+  req,
+  res,
+}: GetServerSidePropsContext) => {
   try {
     const cookie = req.headers.cookie;
     // 쿠키 없다면 에러 보내기
@@ -85,7 +88,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
   };
 
   return (
-    <div className='flex max-w-5xl px-4 mx-auto pt-6'>
+    <div className='mx-auto flex max-w-5xl px-4 pt-6'>
       {/* 포스트 리스트 */}
       <div className='w-full md:mr-3 md:w-8/12'>
         {posts?.pages[0].map((post: any) => (
@@ -94,21 +97,23 @@ const Home: NextPage<HomeProps> = ({ data }) => {
       </div>
 
       {/* 사이드바 */}
-      <div className='hidden w-4/12 ml-3 md:block'>
-        <div className='bg-white border rounded'>
-          <div className='p-4 border-b'>
-            <p className='text-lg font-semibold text-center'>상위 커뮤니티</p>
+      <div className='ml-3 hidden w-4/12 md:block'>
+        <div className='rounded border bg-white'>
+          <div className='border-b p-4'>
+            <p className='text-center text-lg font-semibold'>상위 커뮤니티</p>
           </div>
 
           {/* 커뮤니티 리스트 */}
           <div>
             {topSubs?.map((sub) => (
-              <div key={sub.name} className='flex items-center px-4 py-2 text-xs border-b w-full'>
+              <div
+                key={sub.name}
+                className='flex w-full items-center border-b px-4 py-2 text-xs'>
                 <Link href={`/r/${sub.name}`}>
                   <a>
                     <Image
                       src={sub.imageUrl}
-                      className='rounded-full cursor-pointer'
+                      className='cursor-pointer rounded-full'
                       alt='Sub'
                       width={24}
                       height={24}
@@ -116,9 +121,9 @@ const Home: NextPage<HomeProps> = ({ data }) => {
                   </a>
                 </Link>
                 <Link href={`/r/${sub.name}`}>
-                  <a className='ml-2 font-bold hover:cursor-pointer flex flex-row justify-between w-full'>
+                  <a className='ml-2 flex w-full flex-row justify-between font-bold hover:cursor-pointer'>
                     <p>/r/{sub.name}</p>
-                    <p className='ml-auto font-md'>{sub.postCount}</p>
+                    <p className='font-md ml-auto'>{sub.postCount}</p>
                   </a>
                 </Link>
               </div>
@@ -127,7 +132,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
           {user && (
             <div className='w-full py-6 text-center'>
               <Link href='/subs/create'>
-                <a className='w-full p-2 text-center text-white bg-red-400 rounded'>
+                <a className='w-full rounded bg-red-400 p-2 text-center text-white'>
                   커뮤니티 만들기
                 </a>
               </Link>
