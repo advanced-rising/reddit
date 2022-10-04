@@ -56,7 +56,7 @@ const vote = async (req: Request, res: Response) => {
     });
 
     post.setUserVote(user);
-    post.comments.forEach((c) => c.setUserVote(user));
+    post.comments.forEach((comment) => comment.setUserVote(user));
 
     return res.json(post);
   } catch (error) {

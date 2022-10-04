@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 
 import { FormEvent, useState } from 'react';
 import classNames from 'classnames';
-import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { useAppSelector } from '@redux/storeHooks';
 import { useQueryClient } from '@tanstack/react-query';
 import usePostQuery, { POST_QUERY_KEY } from '@hooks/usePostQuery';
@@ -70,7 +70,9 @@ const PostPage = ({ data }: any) => {
         commentIdentifier: comment?.identifier,
         value,
       });
-      qc.invalidateQueries([POST_QUERY_KEY.COMMENTS, POST_QUERY_KEY.POST]);
+
+      qc.invalidateQueries([POST_QUERY_KEY.COMMENTS]);
+      qc.invalidateQueries([POST_QUERY_KEY.POST]);
     } catch (error) {
       console.log(error);
     }
@@ -85,15 +87,15 @@ const PostPage = ({ data }: any) => {
               <>
                 <div className='flex '>
                   {/* 좋아요 싫어요 기능 부분 */}
-                  <div className='flex-shrink-0 w-10 py-2 text-center rounded-l'>
+                  <div className=' w-10 py-2 rounded-l justify-start items-center flex-col flex'>
                     {/* 좋아요 */}
                     <div
                       className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-red-500'
                       onClick={() => vote(1)}>
                       {post.userVote === 1 ? (
-                        <FaArrowUp className='text-red-500' />
+                        <FaChevronUp className='text-red-500' />
                       ) : (
-                        <FaArrowUp />
+                        <FaChevronUp />
                       )}
                     </div>
                     <p className='text-xs font-bold'>{post.voteScore}</p>
@@ -102,9 +104,9 @@ const PostPage = ({ data }: any) => {
                       className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-blue-500'
                       onClick={() => vote(-1)}>
                       {post.userVote === -1 ? (
-                        <FaArrowDown className='text-blue-500' />
+                        <FaChevronDown className='text-blue-500' />
                       ) : (
-                        <FaArrowDown />
+                        <FaChevronDown />
                       )}
                     </div>
                   </div>
@@ -191,9 +193,9 @@ const PostPage = ({ data }: any) => {
                           className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-red-500'
                           onClick={() => vote(1, comment)}>
                           {comment.userVote === 1 ? (
-                            <FaArrowUp className='text-red-500' />
+                            <FaChevronUp className='text-red-500' />
                           ) : (
-                            <FaArrowUp />
+                            <FaChevronUp />
                           )}
                         </div>
                         <p className='text-xs font-bold'>{comment.voteScore}</p>
@@ -202,9 +204,9 @@ const PostPage = ({ data }: any) => {
                           className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-blue-500'
                           onClick={() => vote(-1, comment)}>
                           {comment.userVote === -1 ? (
-                            <FaArrowDown className='text-red-500' />
+                            <FaChevronDown className='text-blue-500' />
                           ) : (
-                            <FaArrowDown />
+                            <FaChevronDown />
                           )}
                         </div>
                       </div>

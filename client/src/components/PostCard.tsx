@@ -1,13 +1,16 @@
-import axios from 'axios';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { useAppSelector } from '@redux/storeHooks';
 
 import { Post } from '@_types/dto';
+import { useQueryClient } from '@tanstack/react-query';
+import { POST_QUERY_KEY } from '@hooks/usePostQuery';
+import axios from '@utils/axios';
+import { SUB_QUERY_KEY } from '@hooks/useSubQuery';
 
 interface PostCardProps {
   post: Post;
@@ -29,17 +32,22 @@ const PostCard = (props: PostCardProps) => {
     sub,
   } = props.post;
   const router = useRouter();
+  const qc = useQueryClient();
   const isInSubPage = router.pathname === '/r/[sub]';
 
   const { user } = useAppSelector((state) => state.user);
 
   const vote = async (value: number) => {
+    console.log('??? >> ');
     if (!user) router.push('/login');
 
     if (value === userVote) value = 0;
 
     try {
       await axios.post('/votes', { identifier, slug, value });
+      qc.invalidateQueries([POST_QUERY_KEY.COMMENTS]);
+      qc.invalidateQueries([POST_QUERY_KEY.POST]);
+      qc.invalidateQueries([SUB_QUERY_KEY.SUB_NAME]);
     } catch (error) {
       console.log(error);
     }
@@ -50,19 +58,27 @@ const PostCard = (props: PostCardProps) => {
   return (
     <div className='flex mb-4 bg-white rounded' id={identifier}>
       {/* 좋아요 싫어요 기능 부분 */}
-      <div className='flex-shrink-0 w-10 py-2 text-center rounded-l'>
+      <div className=' w-10 py-2 rounded-l justify-start items-center flex-col flex'>
         {/* 좋아요 */}
         <div
           className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-red-500'
           onClick={() => vote(1)}>
-          {userVote === 1 ? <FaArrowUp className='text-red-500' /> : <FaArrowUp />}
+          {userVote === 1 ? (
+            <FaChevronUp className='text-red-500' />
+          ) : (
+            <FaChevronUp />
+          )}
         </div>
         <p className='text-xs font-bold'>{voteScore}</p>
         {/* 싫어요 */}
         <div
           className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-blue-500'
           onClick={() => vote(-1)}>
-          {userVote === -1 ? <FaArrowDown className='text-blue-500' /> : <FaArrowDown />}
+          {userVote === -1 ? (
+            <FaChevronDown className='text-blue-500' />
+          ) : (
+            <FaChevronDown />
+          )}
         </div>
       </div>
       {/* 포스트 데이터 부분 */}
@@ -96,7 +112,9 @@ const PostCard = (props: PostCardProps) => {
               <a className='mx-1 hover:underline'>/u/{username}</a>
             </Link>
             <Link href={url}>
-              <a className='mx-1 hover:underline'>{dayjs(createdAt).format('YYYY-MM-DD HH:mm')}</a>
+              <a className='mx-1 hover:underline'>
+                {dayjs(createdAt).format('YYYY-MM-DD HH:mm')}
+              </a>
             </Link>
           </p>
         </div>
