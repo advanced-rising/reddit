@@ -35,5 +35,5 @@ export default function useAccount() {
     },
   );
 
-  return { account };
+  return { account, setIsTrue };
 }

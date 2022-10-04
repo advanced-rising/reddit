@@ -56,7 +56,10 @@ const PostPage = ({ data }: any) => {
     if (!user) router.push('/login');
 
     // 이미 클릭 한 vote 버튼을 눌렀을 시에는 reset
-    if ((!comment && value === post?.userVote) || (comment && comment.userVote === value)) {
+    if (
+      (!comment && value === post?.userVote) ||
+      (comment && comment.userVote === value)
+    ) {
       value = 0;
     }
 
@@ -77,7 +80,7 @@ const PostPage = ({ data }: any) => {
     <SubLayout data={data}>
       <div className='flex w-full mx-auto '>
         <div className='w-full'>
-          <div className='bg-white rounded w-full'>
+          <div className='bg-white rounded w-full mb-4'>
             {post && (
               <>
                 <div className='flex '>
@@ -87,7 +90,11 @@ const PostPage = ({ data }: any) => {
                     <div
                       className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-red-500'
                       onClick={() => vote(1)}>
-                      {post.userVote === 1 ? <FaArrowUp className='text-red-500' /> : <FaArrowUp />}
+                      {post.userVote === 1 ? (
+                        <FaArrowUp className='text-red-500' />
+                      ) : (
+                        <FaArrowUp />
+                      )}
                     </div>
                     <p className='text-xs font-bold'>{post.voteScore}</p>
                     {/* 싫어요 */}
@@ -106,7 +113,9 @@ const PostPage = ({ data }: any) => {
                       <p className='text-xs test-gray-400'>
                         Posted by <i className='fas fa-abacus'></i>
                         <Link href={`/u/${post.username}`}>
-                          <a className='mx-1 hover:underline'>/u/{post.username}</a>
+                          <a className='mx-1 hover:underline'>
+                            /u/{post.username}
+                          </a>
                         </Link>
                         <Link href={post.url}>
                           <a className='mx-1 hover:underline'>
@@ -120,7 +129,9 @@ const PostPage = ({ data }: any) => {
                     <div className='flex'>
                       <button>
                         <i className='mr-1 fas fa-comment-alt fa-xs'></i>
-                        <span className='font-bold'>{post.commentCount} Comments</span>
+                        <span className='font-bold'>
+                          {post.commentCount} Comments
+                        </span>
                       </button>
                     </div>
                   </div>
@@ -132,7 +143,9 @@ const PostPage = ({ data }: any) => {
                     <div>
                       <p className='mb-1 text-xs'>
                         <Link href={`/u/${account?.username}`}>
-                          <a className='font-semibold text-blue-500'>{account?.username}</a>
+                          <a className='font-semibold text-blue-500'>
+                            {account?.username}
+                          </a>
                         </Link>{' '}
                         으로 댓글 작성
                       </p>
@@ -157,7 +170,9 @@ const PostPage = ({ data }: any) => {
                       </p>
                       <div>
                         <Link href={`/login`}>
-                          <a className='px-3 py-1 text-white bg-gray-400 rounded'>로그인</a>
+                          <a className='px-3 py-1 text-white bg-gray-400 rounded'>
+                            로그인
+                          </a>
                         </Link>
                       </div>
                     </div>
@@ -197,14 +212,20 @@ const PostPage = ({ data }: any) => {
                       <div className='flex flex-col py-2 pr-2'>
                         <p className='mb-1 text-xs leading-none'>
                           <Link href={`/u/${comment.username}`}>
-                            <a className='mr-1 font-bold hover:underline'>{comment.username}</a>
+                            <a className='mr-1 font-bold hover:underline'>
+                              {comment.username}
+                            </a>
                           </Link>
                           <span className='text-gray-600'>
                             {`${comment.voteScore}
-                        posts${dayjs(comment.createdAt).format('YYYY-MM-DD HH:mm')}`}
+                        posts${dayjs(comment.createdAt).format(
+                          'YYYY-MM-DD HH:mm',
+                        )}`}
                           </span>
                         </p>
-                        <p className=' whitespace-normal break-all	'>{comment.body}</p>
+                        <p className=' whitespace-normal break-all	'>
+                          {comment.body}
+                        </p>
                       </div>
                     </li>
                   ))}

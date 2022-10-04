@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '@redux/storeHooks';
 import axios from '@utils/axios';
 
 const NavBar: React.FC = () => {
-  const { account } = useAccount();
+  const { account, setIsTrue } = useAccount();
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const handleLogout = () => {
@@ -16,6 +16,7 @@ const NavBar: React.FC = () => {
       .then(() => {
         localStorage.removeItem('superSecret');
         dispatch(logout());
+        setIsTrue(false);
       })
       .catch((error) => {
         console.log(error);

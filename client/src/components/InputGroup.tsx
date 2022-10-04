@@ -1,7 +1,7 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, InputHTMLAttributes } from 'react';
 import cls from 'classnames';
 
-interface InputGroupProps {
+interface InputGroupProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   error: string | undefined;
   setValue: (event: ChangeEvent<HTMLInputElement>) => void;
