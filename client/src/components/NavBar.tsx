@@ -5,8 +5,10 @@ import useAccount from '@hooks/useAccount';
 import { logout } from '@redux/slices/user';
 import { useAppDispatch, useAppSelector } from '@redux/storeHooks';
 import axios from '@utils/axios';
+import { useRouter } from 'next/router';
 
 const NavBar: React.FC = () => {
+  const router = useRouter();
   const { account, setIsTrue } = useAccount();
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
@@ -17,6 +19,7 @@ const NavBar: React.FC = () => {
         localStorage.removeItem('superSecret');
         dispatch(logout());
         setIsTrue(false);
+        router.reload();
       })
       .catch((error) => {
         console.log(error);

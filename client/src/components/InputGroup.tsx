@@ -1,9 +1,11 @@
 import React, { ChangeEvent, InputHTMLAttributes } from 'react';
 import cls from 'classnames';
+import ErrorText from './ErrorText';
 
 interface InputGroupProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
-  error: string | undefined;
+  error?: boolean;
+  helperText?: string | false;
   setValue: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -11,6 +13,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
   className = 'mb-2',
   error,
   setValue,
+  helperText,
   ...rest
 }) => {
   return (
@@ -27,7 +30,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
         onChange={setValue}
         {...rest}
       />
-      <small className='font-medium text-red-500'>{error} </small>
+      {error && <ErrorText>{helperText} </ErrorText>}
     </div>
   );
 };
