@@ -14,6 +14,7 @@ import { Comment } from '@_types/dto';
 import useAccount from '@hooks/useAccount';
 import SubLayout from '@components/layout/SubLayout';
 import axios from '@utils/axios';
+import PostLike from '@components/common/PostLike';
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
@@ -87,29 +88,12 @@ const PostPage = ({ data }: any) => {
               <>
                 <div className='flex '>
                   {/* 좋아요 싫어요 기능 부분 */}
-                  <div className=' flex w-10 flex-col items-center justify-start rounded-l py-2'>
-                    {/* 좋아요 */}
-                    <div
-                      className='mx-auto flex w-6 cursor-pointer justify-center rounded text-gray-400 hover:bg-gray-300 hover:text-red-500'
-                      onClick={() => vote(1)}>
-                      {post.userVote === 1 ? (
-                        <FaChevronUp className='text-red-500' />
-                      ) : (
-                        <FaChevronUp />
-                      )}
-                    </div>
-                    <p className='text-xs font-bold'>{post.voteScore}</p>
-                    {/* 싫어요 */}
-                    <div
-                      className='mx-auto flex w-6 cursor-pointer justify-center rounded text-gray-400 hover:bg-gray-300 hover:text-blue-500'
-                      onClick={() => vote(-1)}>
-                      {post.userVote === -1 ? (
-                        <FaChevronDown className='text-blue-500' />
-                      ) : (
-                        <FaChevronDown />
-                      )}
-                    </div>
-                  </div>
+                  <PostLike
+                    userVote={post?.userVote}
+                    voteScore={post?.voteScore}
+                    vote={vote}
+                  />
+
                   <div className='py-2 pr-2'>
                     <div className='flex items-center'>
                       <p className='test-gray-400 text-xs'>

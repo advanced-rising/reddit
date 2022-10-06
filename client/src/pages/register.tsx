@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import InputGroup from '@components/InputGroup';
+
 import useAccount from '@hooks/useAccount';
 import axios from '@utils/axios';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import InputGroup from '@components/common/InputGroup';
 
 interface RegisterTypes {
   email: string;

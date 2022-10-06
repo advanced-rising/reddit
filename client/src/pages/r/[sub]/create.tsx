@@ -5,7 +5,9 @@ import * as Yup from 'yup';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
-import ErrorText from '@components/ErrorText';
+import ErrorText from '@components/common/ErrorText';
+import { useQueryClient } from '@tanstack/react-query';
+import { POST_QUERY_KEY } from '@hooks/usePostQuery';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   try {
@@ -26,6 +28,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 const PostCreate = () => {
   const router = useRouter();
   const { sub: subName } = router.query;
+  const qc = useQueryClient();
+
   const submitPost = async (title: string, body: string) => {
     if (title.trim() === '' || !subName) return;
 
@@ -35,7 +39,7 @@ const PostCreate = () => {
         body: body,
         sub: subName,
       });
-
+      await qc.invalidateQueries([POST_QUERY_KEY.POST]);
       router.push({
         pathname: `/r/${subName}/${post.identifier}/${post.slug}`,
         query: { identifier: post.identifier, slug: post.slug },

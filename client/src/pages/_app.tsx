@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import type { AppContext, AppInitialProps, AppProps } from 'next/app';
 
 import { useRouter } from 'next/router';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/layout/NavBar';
 
 import {
   Hydrate,

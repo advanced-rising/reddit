@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 import axios from '@utils/axios';
 import useSubQuery from '@hooks/useSubQuery';
-import { User } from '@_types/dto';
+import { Post, User } from '@_types/dto';
 import useAccount from '@hooks/useAccount';
 import { useAppSelector } from '@redux/storeHooks';
 import usePostQuery from '@hooks/usePostQuery';
@@ -46,8 +46,9 @@ const Home: NextPage<HomeProps> = ({ data }) => {
     page: 0,
   });
   const { posts, fetchNextPage } = usePostQuery({ query: query.page });
-
-  console.log('posts', posts?.pages);
+  const scrollPosts: Post[] = posts?.pages
+    ? ([] as Post[]).concat(...posts.pages)
+    : [];
   useEffect(() => {
     if (inView) {
       fetchNextPage();
@@ -91,7 +92,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
     <div className='mx-auto flex max-w-5xl px-4 pt-6'>
       {/* 포스트 리스트 */}
       <div className='w-full md:mr-3 md:w-8/12'>
-        {posts?.pages[0].map((post: any) => (
+        {scrollPosts.map((post: any) => (
           <PostCard key={post.identifier} post={post} />
         ))}
       </div>

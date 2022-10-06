@@ -11,6 +11,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { POST_QUERY_KEY } from '@hooks/usePostQuery';
 import axios from '@utils/axios';
 import { SUB_QUERY_KEY } from '@hooks/useSubQuery';
+import PostLike from './common/PostLike';
 
 interface PostCardProps {
   post: Post;
@@ -38,7 +39,6 @@ const PostCard = (props: PostCardProps) => {
   const { user } = useAppSelector((state) => state.user);
 
   const vote = async (value: number) => {
-    console.log('??? >> ');
     if (!user) router.push('/login');
 
     if (value === userVote) value = 0;
@@ -47,6 +47,7 @@ const PostCard = (props: PostCardProps) => {
       await axios.post('/votes', { identifier, slug, value });
       qc.invalidateQueries([POST_QUERY_KEY.COMMENTS]);
       qc.invalidateQueries([POST_QUERY_KEY.POST]);
+      qc.invalidateQueries([POST_QUERY_KEY.POSTS]);
       qc.invalidateQueries([SUB_QUERY_KEY.SUB_NAME]);
     } catch (error) {
       console.log(error);
@@ -58,29 +59,8 @@ const PostCard = (props: PostCardProps) => {
   return (
     <div className='mb-4 flex rounded bg-white' id={identifier}>
       {/* 좋아요 싫어요 기능 부분 */}
-      <div className='flex w-10 flex-col items-center justify-start rounded-l py-2'>
-        {/* 좋아요 */}
-        <div
-          className='mx-auto flex w-6 cursor-pointer justify-center rounded text-gray-400 hover:bg-gray-300 hover:text-red-500'
-          onClick={() => vote(1)}>
-          {userVote === 1 ? (
-            <FaChevronUp className='text-red-500' />
-          ) : (
-            <FaChevronUp />
-          )}
-        </div>
-        <p className='text-xs font-bold'>{voteScore}</p>
-        {/* 싫어요 */}
-        <div
-          className='mx-auto flex w-6 cursor-pointer justify-center rounded text-gray-400 hover:bg-gray-300 hover:text-blue-500'
-          onClick={() => vote(-1)}>
-          {userVote === -1 ? (
-            <FaChevronDown className='text-blue-500' />
-          ) : (
-            <FaChevronDown />
-          )}
-        </div>
-      </div>
+      <PostLike userVote={userVote} voteScore={voteScore} vote={vote} />
+
       {/* 포스트 데이터 부분 */}
       <div className='w-full p-2'>
         <div className='flex items-center'>

@@ -13,7 +13,7 @@ import React, {
 } from 'react';
 
 import PostCard from '@components/PostCard';
-import SideBar from '@components/SideBar';
+import SideBar from '@components/layout/SideBar';
 import useAccount from '@hooks/useAccount';
 import useSubQuery, { SUB_QUERY_KEY } from '@hooks/useSubQuery';
 import { useAppSelector } from '@redux/storeHooks';

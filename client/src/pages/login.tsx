@@ -2,13 +2,14 @@ import { QueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import InputGroup from '@components/InputGroup';
+
 import useAccount from '@hooks/useAccount';
 import { login } from '@redux/slices/user';
 import { useAppDispatch } from '@redux/storeHooks';
 import * as Yup from 'yup';
 import axios from '@utils/axios';
 import { Form, Formik } from 'formik';
+import InputGroup from '@components/common/InputGroup';
 
 interface LoginTypes {
   username: string;
