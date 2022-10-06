@@ -58,16 +58,18 @@ const Home: NextPage<HomeProps> = ({ data }) => {
   const [observedPost, setObservedPost] = useState('');
   useEffect(() => {
     // 포스트가 없다면 return
-    if (!posts || posts.pages.length === 0) return;
-    // posts 배열안에 마지막 post에 id를 가져옵니다.
-    const id = posts.pages[posts.pages.length - 1].identifier;
-    // posts 배열에 post가 추가돼서 마지막 post가 바뀌었다면
+    if (!scrollPosts || scrollPosts.length === 0) return;
+    // scrollPosts 배열안에 마지막 post에 id를 가져옵니다.
+    const id = scrollPosts[scrollPosts.length - 1].identifier;
+    // scrollPosts 배열에 post가 추가돼서 마지막 post가 바뀌었다면
     // 바뀐 post 중 마지막post를 obsevedPost로
     if (id !== observedPost) {
       setObservedPost(id);
       observeElement(document.getElementById(id));
     }
-  }, [posts]);
+  }, [scrollPosts]);
+
+  console.log('observedPost', observedPost);
 
   const observeElement = (element: HTMLElement | null) => {
     if (!element) return;
@@ -77,6 +79,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
       (entries) => {
         // isIntersecting: 관찰 대상의 교차 상태(Boolean)
         if (entries[0].isIntersecting === true) {
+          setQuery({ page: query.page + 1 });
           console.log('마지막 포스트에 왔습니다.');
           fetchNextPage();
           observer.unobserve(element);
@@ -93,7 +96,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
       {/* 포스트 리스트 */}
       <div className='w-full md:mr-3 md:w-8/12'>
         {scrollPosts.map((post: any) => (
-          <PostCard key={post.identifier} post={post} />
+          <PostCard key={post.identifier} post={post} postRef={ref} />
         ))}
       </div>
 

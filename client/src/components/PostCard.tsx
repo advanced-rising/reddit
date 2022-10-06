@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { Ref } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { useAppSelector } from '@redux/storeHooks';
 
@@ -15,6 +15,7 @@ import PostLike from './common/PostLike';
 
 interface PostCardProps {
   post: Post;
+  postRef?: (node?: Element | null | undefined) => void;
 }
 
 const PostCard = (props: PostCardProps) => {
@@ -32,6 +33,7 @@ const PostCard = (props: PostCardProps) => {
     username,
     sub,
   } = props.post;
+  const { postRef } = props;
   const router = useRouter();
   const qc = useQueryClient();
   const isInSubPage = router.pathname === '/r/[sub]';

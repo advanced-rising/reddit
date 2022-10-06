@@ -30,9 +30,10 @@ const usePostQuery = (props: usePostQueryTypes) => {
     hasNextPage,
     hasPreviousPage,
   } = useInfiniteQuery(
-    [POST_QUERY_KEY.POSTS],
-    async ({ pageParam = query }): Promise<Post[] | any> => {
-      const { data } = await axios.get(`/posts?${pageParam}`);
+    [POST_QUERY_KEY.POSTS, query],
+    async ({ pageParam = 4 }): Promise<Post[] | any> => {
+      console.log('query', query);
+      const { data } = await axios.get(`/posts?page=${query}`);
       return data;
     },
     {
