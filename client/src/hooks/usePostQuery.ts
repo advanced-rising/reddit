@@ -18,37 +18,41 @@ interface usePostQueryTypes {
 const usePostQuery = (props: usePostQueryTypes) => {
   const { query = 0, options, identifier, slug } = props;
 
-  // const {
-  //   status,
-  //   data: posts,
-  //   error,
-  //   isFetching,
-  //   isFetchingNextPage,
-  //   isFetchingPreviousPage,
-  //   fetchNextPage,
-  //   fetchPreviousPage,
-  //   hasNextPage,
-  //   hasPreviousPage,
-  // } = useInfiniteQuery(
-  //   [POST_QUERY_KEY.POSTS],
-  //   async ({ pageParam = 0 }): Promise<Post[] | any> => {
-  //     console.log('query', query);
-  //     const { data } = await axios.get(`/posts?page=${pageParam}`);
-  //     return data;
-  //   },
-  //   {
-  //     getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
-  //     getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
-  //   },
-  // );
-
-  const { data: posts } = useQuery(
+  const {
+    status,
+    data: posts,
+    error,
+    isFetching,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    fetchNextPage,
+    fetchPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+  } = useInfiniteQuery(
     [POST_QUERY_KEY.POSTS, query],
-    async (): Promise<Post[]> => {
-      const { data } = await axios.get(`/posts?page=${query}`);
+    async ({ pageParam = query }): Promise<Post[] | any> => {
+      console.log('query', query);
+      const { data } = await axios.get(`/posts`, {
+        params: {
+          page: pageParam,
+        },
+      });
       return data;
     },
+    {
+      getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
+      getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
+    },
   );
+
+  // const { data: posts } = useQuery(
+  //   [POST_QUERY_KEY.POSTS, query],
+  //   async (): Promise<Post[]> => {
+  //     const { data } = await axios.get(`/posts?page=${query}`);
+  //     return data;
+  //   },
+  // );
 
   const { data: post } = useQuery(
     [POST_QUERY_KEY.POST],
@@ -76,6 +80,8 @@ const usePostQuery = (props: usePostQueryTypes) => {
     posts,
     post,
     comments,
+    fetchNextPage,
+    hasNextPage,
   };
 };
 

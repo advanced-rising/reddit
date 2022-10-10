@@ -45,16 +45,19 @@ const Home: NextPage<HomeProps> = ({ data }) => {
   const [query, setQuery] = useState({
     page: 0,
   });
-  const { posts } = usePostQuery({
+  const { posts, fetchNextPage, hasNextPage } = usePostQuery({
     query: query.page,
   });
   console.log('posts', posts);
   console.log('query', query.page);
-  const scrollPosts: Post[] = posts ? ([] as Post[]).concat(...posts) : [];
-
+  const scrollPosts: Post[] = posts
+    ? ([] as Post[]).concat(...posts.pages)
+    : [];
+  console.log('scrollPosts', scrollPosts);
   useEffect(() => {
-    if (inView) {
+    if (inView && hasNextPage) {
       setQuery({ page: query.page + 1 });
+      fetchNextPage();
     }
   }, [inView]);
 
@@ -62,9 +65,9 @@ const Home: NextPage<HomeProps> = ({ data }) => {
 
   useEffect(() => {
     // 포스트가 없다면 return
-    if (!posts || posts.length === 0) return;
+    if (!posts || posts.pages.length === 0) return;
     // posts 배열안에 마지막 post에 id를 가져옵니다.
-    const id = posts[posts.length - 1].identifier;
+    const id = posts.pages[posts.pages.length - 1].identifier;
     // posts 배열에 post가 추가돼서 마지막 post가 바뀌었다면
     // 바뀐 post 중 마지막post를 obsevedPost로
     if (id !== observedPost) {
@@ -82,6 +85,8 @@ const Home: NextPage<HomeProps> = ({ data }) => {
         // isIntersecting: 관찰 대상의 교차 상태(Boolean)
         if (entries[0].isIntersecting === true) {
           console.log('마지막 포스트에 왔습니다.');
+          fetchNextPage();
+
           setQuery({ page: query.page + 1 });
           observer.unobserve(element);
         }
@@ -100,9 +105,9 @@ const Home: NextPage<HomeProps> = ({ data }) => {
         {scrollPosts.map((post) => {
           return <PostCard key={post.identifier} post={post} />;
         })}
-        {/* <div className='mt-40 bg-slate-700' ref={ref}>
+        <div className='mt-40 bg-slate-700' ref={ref}>
           asdasd
-        </div> */}
+        </div>
       </div>
 
       {/* 사이드바 */}
