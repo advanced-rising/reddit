@@ -33,16 +33,15 @@ const usePostQuery = (props: usePostQueryTypes) => {
     [POST_QUERY_KEY.POSTS, query],
     async ({ pageParam = query }): Promise<Post[] | any> => {
       console.log('query', query);
-      const { data } = await axios.get(`/posts`, {
-        params: {
-          page: pageParam,
-        },
-      });
-      return data;
+      const { data } = await axios.get(`/posts?page=${pageParam}`);
+      const nextPage = data ? pageParam + 1 : undefined;
+      return { data, nextPage };
     },
     {
-      getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
-      getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
+      getPreviousPageParam: (firstPage) => firstPage ?? undefined,
+      getNextPageParam: (lastPage, pages) => {
+        lastPage.nextPage ?? undefined;
+      },
     },
   );
 
