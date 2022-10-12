@@ -15,7 +15,7 @@ import PostCard from '@components/PostCard';
 import qs from 'qs';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
-import useInfiniteQueryWithScroll from '@hooks/useInfiniteQueryWithScroll';
+
 import { useInView } from 'react-intersection-observer';
 
 export const getServerSideProps = async ({
@@ -54,11 +54,10 @@ const Home: NextPage<HomeProps> = ({ data }) => {
   const [ref, inView] = useInView();
 
   useEffect(() => {
-    if (!posts) return;
     if (inView) {
       console.log('>>');
       fetchNextPage();
-      setQuery({ page: query.page + 1 });
+      // setQuery({ page: query.page + 1 });
     }
   }, [inView]);
 
@@ -69,9 +68,9 @@ const Home: NextPage<HomeProps> = ({ data }) => {
       {/* 포스트 리스트 */}
 
       <div className='w-full md:mr-3 md:w-8/12'>
-        {posts?.pages.map((group) => {
+        {posts?.pages.map((group, idx) => {
           return (
-            <Fragment>
+            <Fragment key={idx}>
               {group.data.map((post: Post) => {
                 return <PostCard key={post.identifier} post={post} />;
               })}
@@ -79,7 +78,9 @@ const Home: NextPage<HomeProps> = ({ data }) => {
           );
         })}
 
-        <div ref={ref}>asdasd</div>
+        <button ref={ref} onClick={() => fetchNextPage()}>
+          asdasd
+        </button>
       </div>
 
       {/* 사이드바 */}

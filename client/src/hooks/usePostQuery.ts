@@ -31,11 +31,11 @@ const usePostQuery = (props: usePostQueryTypes) => {
     hasPreviousPage,
   } = useInfiniteQuery(
     [POST_QUERY_KEY.POSTS, query],
-    async ({ pageParam = query }): Promise<Post[] | any> => {
+    async ({ pageParam = 0 }): Promise<Post[] | any> => {
       console.log('query', query);
       const { data } = await axios.get(`/posts?page=${pageParam}`);
-      const nextPage = data ? pageParam + 1 : undefined;
-      return { data, nextPage };
+      const nextPage = data >= 8 ? pageParam + 1 : undefined;
+      return { data, nextPage, isLast: !nextPage };
     },
     {
       getPreviousPageParam: (firstPage) => firstPage ?? undefined,
