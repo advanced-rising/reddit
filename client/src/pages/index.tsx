@@ -47,6 +47,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
   const [query, setQuery] = useState({
     page: 0,
   });
+
   const { posts, fetchNextPage, hasNextPage } = usePostQuery({
     query: query.page,
   });
@@ -77,10 +78,6 @@ const Home: NextPage<HomeProps> = ({ data }) => {
             </Fragment>
           );
         })}
-
-        <button ref={ref} onClick={() => fetchNextPage()}>
-          asdasd
-        </button>
       </div>
 
       {/* 사이드바 */}

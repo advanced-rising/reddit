@@ -20,9 +20,13 @@ axios.interceptors.response.use(
     if (error.response.data?.error && error.response.data.error.message) {
       console.log(`${error.response.data.error.message}`);
     } else {
-      console.log(`Error Code : ${error.code} Error Message : ${error.message}`);
+      console.log(
+        `Error Code : ${error.code} Error Message : ${error.message}`,
+      );
     }
-    return Promise.reject((error.response && error.response.data) || 'Something went wrong');
+    return Promise.reject(
+      (error.response && error.response.data) || 'Something went wrong',
+    );
   },
 );
 
