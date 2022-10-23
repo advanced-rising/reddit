@@ -1,4 +1,5 @@
 import useUserQuery from '@hooks/useUser';
+import { Comment, Post } from '@_types/dto';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,13 +12,13 @@ const UserPage = () => {
   const router = useRouter();
   const username = router.query.username;
 
-  const { user } = useUserQuery({ username: username });
-
+  const { user } = useUserQuery({ username: String(username) });
+  console.log('user', user);
   return (
     <div className='mx-auto flex max-w-5xl px-4 pt-5'>
       {/* 유저 포스트 댓글 리스트 */}
       <div className='w-full md:mr-3 md:w-8/12'>
-        {user.userData.map((data: any) => {
+        {user?.userData?.map((data: any) => {
           if (data.type === 'Post') {
             const post: Post = data;
             return <PostCard key={post.identifier} post={post} />;
@@ -68,10 +69,10 @@ const UserPage = () => {
             width={40}
             height={40}
           />
-          <p className='text-md pl-2'>{user.user.username}</p>
+          <p className='text-md pl-2'>{user?.user?.username}</p>
         </div>
         <div className='rounded-b bg-white p-2'>
-          <p>{dayjs(user.user.createdAt).format('YYYY.MM.DD')} 가입</p>
+          <p>{dayjs(user?.user?.createdAt).format('YYYY.MM.DD')} 가입</p>
         </div>
       </div>
     </div>
