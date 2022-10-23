@@ -25,7 +25,7 @@ const useSubQuery = (props: useSubQueryTypes) => {
   );
 
   const { data: subsName } = useQuery(
-    [SUB_QUERY_KEY.SUB_NAME],
+    [SUB_QUERY_KEY.SUB_NAME, subName],
     async (): Promise<Sub> => {
       const { data } = await axios.get(`/subs/${subName}`);
       return data;

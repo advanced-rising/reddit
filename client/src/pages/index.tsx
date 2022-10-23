@@ -62,7 +62,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
     }
   }, [inView]);
 
-  console.log('posts', posts);
+  console.log('topSubs', topSubs);
 
   return (
     <div className='mx-auto flex max-w-5xl px-4 pt-6'>
