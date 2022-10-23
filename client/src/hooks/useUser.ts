@@ -5,7 +5,7 @@ import { Post, User } from '@_types/dto';
 
 interface UserTypes {
   user: User;
-  userDate: Post[];
+  userData: Post[];
 }
 
 export const USER_QUERY_KEY = {
