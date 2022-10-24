@@ -13,7 +13,7 @@ const UserPage = () => {
   const username = router.query.username;
 
   const { user } = useUserQuery({ username: String(username) });
-  console.log('user', user);
+
   return (
     <div className='mx-auto flex max-w-5xl px-4 pt-5'>
       {/* 유저 포스트 댓글 리스트 */}
@@ -52,7 +52,7 @@ const UserPage = () => {
                     </Link>
                   </p>
                   <hr />
-                  <p className='p-1'>{comment.body}</p>
+                  <p className='break-words p-1 pr-10'>{comment.body}</p>
                 </div>
               </div>
             );
