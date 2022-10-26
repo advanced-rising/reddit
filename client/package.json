@@ -29,7 +29,7 @@
     "react-icons": "^4.4.0",
     "react-intersection-observer": "^9.4.0",
     "react-redux": "^8.0.4",
-    "sharp": "^0.31.0",
+    "sharp": "^0.31.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {

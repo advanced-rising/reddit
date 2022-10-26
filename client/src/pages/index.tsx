@@ -27,7 +27,10 @@ export const getServerSideProps = async ({
     // 쿠키 없다면 에러 보내기
     if (!cookie) throw new Error('Missing auth token cookie');
     // 쿠키 있다면 쿠키를 이용해서 벡엔드 인증처리하기
-    const { data } = await axios.get('/auth/me', { headers: { cookie } });
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/auth/me`,
+      { headers: { cookie } },
+    );
 
     return { props: { data } };
   } catch (error) {
