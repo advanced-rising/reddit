@@ -5,7 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:dev": "env-cmd -f .env.development next build",
+    "build:production": "env-cmd -f .env.production next build",
     "start": "next start",
+    "start:dev": "env-cmd -f .env.development next start",
+    "start:production": "env-cmd -f .env.production next start",
     "lint": "next lint"
   },
   "dependencies": {
